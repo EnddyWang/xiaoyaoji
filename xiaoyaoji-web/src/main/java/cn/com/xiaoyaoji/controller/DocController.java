@@ -271,7 +271,7 @@ public class DocController {
         if (user != null) {
             //访问权限
             editPermission = ServiceFactory.instance().checkUserHasProjectEditPermission(user.getId(), doc.getProjectId());
-            AssertUtils.isTrue(editPermission || (!editPermission && !editing),"无操作权限");
+            //AssertUtils.isTrue(editPermission || (!editPermission && !editing),"无操作权限");
         }
 
         List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.DOC_EV);
