@@ -68,7 +68,7 @@ public class AttachController {
     @Ignore
     @GetMapping("/{relatedId}")
     public Object get(@PathVariable String relatedId, @RequestParam String projectId,User user){
-        ServiceTool.checkUserHasAccessPermission(projectId,user);
+        //ServiceTool.checkUserHasAccessPermission(projectId,user);
         List<Attach> attaches= ServiceFactory.instance().getAttachsByRelatedId(relatedId);
         return new _HashMap<>()
                 .add("fileAccess", ConfigUtils.getFileAccessURL())
