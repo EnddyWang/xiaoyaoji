@@ -5,6 +5,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <textarea class="hide" id="md-view">${doc.content}</textarea>
+<style>
+    #md-view-html ul{
+        padding-left:30px;
+    }
+    #md-view-html ul li{
+        list-style:disc;
+    }
+</style>
 <div id="md-view-html"></div>
 <script>
     (function(){

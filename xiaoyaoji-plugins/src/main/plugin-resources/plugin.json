@@ -54,7 +54,7 @@
     "description": "markdown文档",
     "author": "zhoujingjie",
     "createTime": "2017/06/21",
-    "version": "2.1.4",
+    "version": "2.1.5",
     "event":"doc.ev",
     "icon":{
       "icon32x32":"/assets/markdown.png"
