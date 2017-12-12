@@ -166,6 +166,7 @@
                     commons.parseImportData(data, temp);
                     var self = this;
                     temp.forEach(function (d) {
+                        d.id=utils.generateUID();
                         if(self.import ==='requestHeaders'){
                             self.content.requestHeaders.push(d);
                         }else if(self.import ==='requestArgs'){
