@@ -1,34 +1,65 @@
-(function(){
-    define(['utils',ctx+'/proxy/'+pluginId+'/assets/html5sortable/html.sortable.min.js'],function(utils,sortable){
-        function _initsort_(docApp){
+(function () {
+    define(['utils', ctx + '/proxy/' + pluginId + '/assets/html5sortable/html.sortable.min.js'], function (utils, sortable) {
+
+        //驼峰转横线拼接
+        function formatCamelStr(str) {
+            var temp = '';
+            for (var i = 0; i < str.length; i++) {
+                if (i === 0) {
+                    temp += str.charAt(i);
+                } else {
+                    var t = str.charAt(i);
+                    if (t === t.toUpperCase()) {
+                        temp += '-' + t.toLowerCase();
+                    } else {
+                        temp += t;
+                    }
+                }
+            }
+            return temp;
+        }
+
+        //排序
+        function _initsort_(docApp, moduleName) {
             setTimeout(function () {
-                sortable('.div-editing-table', 'destroy');
-                var doms = sortable('.div-editing-table', {
+                var clazz = '.' + formatCamelStr(moduleName);
+                sortable(clazz, 'destroy');
+                var doms = sortable(clazz, {
                     handle: '.icon-drag-copy',
-                    items: '.div-editing-line'
+                    items: '.div-editing-line',
+                    connectWith: moduleName
                 });
                 $(doms).off('sortupdate').on('sortupdate', function (e) {
                     var moduleName = $(e.target).attr("data-module-name");
                     var component;
-                    docApp.$children.forEach(function(item){
-                        if(moduleName && item.name === moduleName){
+                    docApp.$children.forEach(function (item) {
+                        if (moduleName && item.name === moduleName) {
                             component = item;
                             return false;
                         }
                     });
-                    if(!component){
+                    if (!component) {
                         return false;
                     }
-                    var oldIndex=e.originalEvent.detail.oldElementIndex,index=e.originalEvent.detail.elementIndex;
-                    component.$emit('sortUpdate',{
-                        id:$(e.originalEvent.detail.item).data('id'),
-                        index:index,
-                        oldIndex:oldIndex
+                    var detail = e.originalEvent.detail;
+                    var oldIndex = detail.oldElementIndex, index = detail.elementIndex,
+                        startPid = $(detail.startparent).data('pid'), endPid = $(detail.endparent).data('pid');
+                    component.$emit('sortUpdate', {
+                        id: $(detail.item).data('id'),
+                        index: index,
+                        oldIndex: oldIndex,
+                        startPid: startPid,
+                        endPid: endPid
                     });
+
+                    setTimeout(function(){
+                        sortable(clazz, 'reload');
+                    },500);
                 });
             }, 500);
         }
-        window._initsort_=_initsort_;
+
+        window._initsort_ = _initsort_;
 
         function getArrayValueType(value) {
             var type = 'array';
@@ -67,7 +98,7 @@
                     var v = data[key];
                     var t = {children: []};
                     t.name = key;
-                    if (v !== undefined  && v!== null) {
+                    if (v !== undefined && v !== null) {
                         if (v.constructor.name === 'Object') {
                             t.type = 'object';
                             parseImportData(v, t.children);
@@ -94,13 +125,13 @@
             }
         }
 
-        function checkId(arr){
-            if(arr && arr.length>0){
-                arr.forEach(function(item){
-                    if(!item.id){
+        function checkId(arr) {
+            if (arr && arr.length > 0) {
+                arr.forEach(function (item) {
+                    if (!item.id) {
                         item.id = utils.generateUID();
                     }
-                    if(item.children && item.children.length>0){
+                    if (item.children && item.children.length > 0) {
                         checkId(item.children);
                     }
                 });
@@ -108,14 +139,13 @@
         }
 
         return {
-            _initsort_:_initsort_,
-            parseImportData:parseImportData,
-            checkId:checkId,
-            headers:["User-Agent", "Accept", "Accept-Charset", "Accept-Encoding", "Accept-Language", "Accept-Datetime", "Authorization", "Cache-Control", "Connection", "Cookie", "Content-Length", "Content-MD5", "Content-Type"],
+            _initsort_: _initsort_,
+            parseImportData: parseImportData,
+            checkId: checkId,
+            headers: ["User-Agent", "Accept", "Accept-Charset", "Accept-Encoding", "Accept-Language", "Accept-Datetime", "Authorization", "Cache-Control", "Connection", "Cookie", "Content-Length", "Content-MD5", "Content-Type"],
             requests: ["name", "id", "password", "email", "createtime", "datetime", "createTime", "dateTime", "user", "code", "status", "type", "msg", "message", "time", "image", "file", "token", "accesstoken", "access_token", "province", "city", "area", "description", "remark", "logo"],
-            responses: ["name", "id", "password", "email", "createtime", "datetime", "createTime", "dateTime", "user", "code", "status", "type", "msg", "message", "error", "errorMsg", "test", "fileAccess", "image", "require", "token", "accesstoken", "accessToken", "access_token", "province", "city", "area", "remark", "description", "logo"] 
+            responses: ["name", "id", "password", "email", "createtime", "datetime", "createTime", "dateTime", "user", "code", "status", "type", "msg", "message", "error", "errorMsg", "test", "fileAccess", "image", "require", "token", "accesstoken", "accessToken", "access_token", "province", "city", "area", "remark", "description", "logo"]
         };
-
 
 
     });

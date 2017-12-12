@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/template"  id="request-headers-template" class="hide">
-    <div v-bind:class="{'div-editing-table':editing}" class="placeholder-request-headers">
+    <div v-bind:class="{'div-editing-table':editing,'request-headers':true}" class="placeholder-request-headers" :data-pid="pid" :data-module-name="name">
     <div class="div-table-line " v-bind:class="{'div-editing-line':editing}" v-for="item in requestHeaders" :key="item.id"  :data-id="item.id">
         <div v-if="editing">
         <ul class="cb">
@@ -48,7 +48,7 @@
     requirejs(['vue','${ctx}/proxy/${pluginInfo.id}/assets/js/table.js?v=${pluginInfo.version}'],function(Vue,table){
         table = $.extend(true,{},table);
         table.template=document.getElementById('request-headers-template').innerHTML;
-        table.props=['requestHeaders','editing','name'];
+        table.props=['requestHeaders','editing','name','pid'];
         Vue.component('RequestHeadersVue',table);
     });
 </script>

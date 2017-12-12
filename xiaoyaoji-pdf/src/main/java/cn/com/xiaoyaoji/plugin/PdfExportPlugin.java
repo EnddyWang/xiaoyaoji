@@ -22,12 +22,13 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * @author zhoujingjie
- *         created on 2017/7/1
+ * created on 2017/7/1
  */
 public class PdfExportPlugin extends DocExportPlugin {
 
@@ -39,10 +40,14 @@ public class PdfExportPlugin extends DocExportPlugin {
 
     @Override
     public void doExport(String projectId, HttpServletResponse response) throws IOException {
+        //错误案例 http://www.xiaoyaoji.cn/doc/179NIrat45
         Project project = ProjectService.instance().getProject(projectId);
         AssertUtils.notNull("pdf export error:project or output stream cannot be null.", project);
         Document document = new Document();
         try {
+            response.addHeader("Content-Type","application/pdf");
+            String fileName = URLEncoder.encode(project.getName(),"UTF-8");
+            response.addHeader("Content-Disposition","attachment; filename='"+fileName+".pdf'");
             PdfWriter.getInstance(document, response.getOutputStream());
             document.open();
             printRootTitle(project, document);
@@ -69,7 +74,9 @@ public class PdfExportPlugin extends DocExportPlugin {
         content.setAlignment(Element.ALIGN_RIGHT);
         Map<Object, Object> info = new HashMap<Object, Object>();
         info.put("作者", ServiceFactory.instance().getUserName(project.getUserId()));
-        info.put("更新时间", new SimpleDateFormat("yyyy-MM-dd").format(project.getLastUpdateTime()));
+        if (project.getLastUpdateTime() != null) {
+            info.put("更新时间", new SimpleDateFormat("yyyy-MM-dd").format(project.getLastUpdateTime()));
+        }
         content.addContent(info);
 //        content.add(Chunk.NEXTPAGE);
         document.add(content);
@@ -211,12 +218,10 @@ public class PdfExportPlugin extends DocExportPlugin {
 
     private static void printDoc(int order, Object parent, Doc doc, Object[] globalParams, Document document) throws DocumentException {
 
-        boolean isFolder = false;
         Element title = null;
         switch (DocType.parse(doc.getType())) {
             case SYS_FOLDER:
                 title = printFolder(order, parent, doc);
-                isFolder = true;
                 break;
             case SYS_HTTP:
                 title = printHttp(order, parent, doc, globalParams);
@@ -233,12 +238,12 @@ public class PdfExportPlugin extends DocExportPlugin {
             case SYS_THIRDPARTY:
                 title = printThirdpart(order, parent, doc);
                 break;
+            default:
+                break;
         }
-        if (isFolder) {
-            List<Doc> children = doc.getChildren();
-            for (int i = 0; i < children.size(); i++) {
-                printDoc(i, title, children.get(i), globalParams, document);
-            }
+        List<Doc> children = doc.getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            printDoc(i, title, children.get(i), globalParams, document);
         }
         if (parent == null) {
             document.add(title);

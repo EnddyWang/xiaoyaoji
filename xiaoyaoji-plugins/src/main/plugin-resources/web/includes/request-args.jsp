@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/template" id="request-args-template" class="hide">
-    <div v-bind:class="{'div-editing-table':editing}" :data-module-name="name">
+    <div v-bind:class="{'div-editing-table':editing,'request-args':true}" :data-pid="pid" :data-module-name="name">
         <div class="div-table-line"
              v-bind:class="{'div-editing-line':editing}" v-for="(item,index) in requestArgs" :key="item.id" :data-id="item.id">
             <div v-if="editing">
@@ -68,7 +68,7 @@
     requirejs(['vue','${ctx}/proxy/${pluginInfo.id}/assets/js/table.js?v=${pluginInfo.version}'],function(Vue,table){
         table = $.extend(true,{},table);
         table.template=document.getElementById('request-args-template').innerHTML;
-        table.props=['requestArgs','editing','name'];
+        table.props=['requestArgs','editing','name', 'pid'];
         Vue.component('RequestArgsVue',table);
     });
 </script>

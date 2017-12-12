@@ -4,7 +4,7 @@
     var thirds = [
         'vue',
         'utils',
-        ctx+'/proxy/'+pluginId+'/assets/js/doc.commons.js'
+        ctx+'/proxy/'+pluginId+'/assets/js/doc.commons.js?'+Date.now()
     ];
     requirejs(thirds,function(Vue,utils,commons){
 
@@ -92,8 +92,11 @@
                 }
                 this.global = g;
 
-                _initsort_(this);
-                
+                _initsort_(this,'requestArgs');
+                _initsort_(this,'requestHeaders');
+                _initsort_(this,'responseArgs');
+                _initsort_(this,'responseHeaders');
+
                 this.currentEnv = g.environment[0] || {};
                 var urlArgs=[];
                 var match = this.content.url.match(/(\{[a-zA-Z0-9_]+\})/g);
@@ -131,16 +134,16 @@
             },
             methods:{
                 newRow:function(type){
-                    if(type ==='requestHeader'){
-                         this.content.requestHeaders.push({require:'true',children:[]});
-                    }else if(type ==='requestArg'){
-                        this.content.requestArgs.push({require:'true',children:[],type:'string'});
-                    }else if(type ==='responseHeader'){
-                        this.content.responseHeaders.push({require:'true',children:[]});
-                    }else  if(type ==='responseArg'){
-                        this.content.responseArgs.push({require:'true',children:[],type:'string'});
+                    if(type ==='requestHeaders'){
+                         this.content.requestHeaders.push({id:utils.generateUID(),require:'true',children:[]});
+                    }else if(type ==='requestArgs'){
+                        this.content.requestArgs.push({id:utils.generateUID(),require:'true',children:[],type:'string'});
+                    }else if(type ==='responseHeaders'){
+                        this.content.responseHeaders.push({id:utils.generateUID(),require:'true',children:[]});
+                    }else  if(type ==='responseArgs'){
+                        this.content.responseArgs.push({id:utils.generateUID(),require:'true',children:[],type:'string'});
                     }
-                    commons._initsort_(this);
+                    commons._initsort_(this,type);
                 },
                 importJSON:function(type){
                     this.importModal = true;
@@ -163,18 +166,18 @@
                     commons.parseImportData(data, temp);
                     var self = this;
                     temp.forEach(function (d) {
-                        if(self.import ==='requestHeader'){
+                        if(self.import ==='requestHeaders'){
                             self.content.requestHeaders.push(d);
-                        }else if(self.import ==='requestArg'){
+                        }else if(self.import ==='requestArgs'){
                             self.content.requestArgs.push(d);
-                        }else if(self.import ==='responseHeader'){
+                        }else if(self.import ==='responseHeaders'){
                             self.content.responseHeaders.push(d);
-                        }else if(self.import ==='responseArg'){
+                        }else if(self.import ==='responseArgs'){
                             self.content.responseArgs.push(d);
                         }
                     });
                     this.importModal = false;
-                    commons._initsort_(this);
+                    commons._initsort_(this,self.import);
                 },
                 loadAttach:function(){
                     var self = this;
