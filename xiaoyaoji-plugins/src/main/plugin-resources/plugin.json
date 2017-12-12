@@ -6,7 +6,7 @@
     "description": "http 文档",
     "author": "zhoujingjie",
     "createTime": "2017/06/21",
-    "version": "2.1.4",
+    "version": "2.1.6",
     "event":"doc.ev",
     "icon":{
       "icon32x32":"/assets/http.png"

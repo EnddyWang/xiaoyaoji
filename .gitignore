@@ -4,3 +4,4 @@ target/
 .idea/
 e.log
 e.log.1
+config.dev.properties
