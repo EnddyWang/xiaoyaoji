@@ -32,7 +32,7 @@
             <p v-cloak class="tip" v-show="errors.has('password')">{{ errors.first('password') }}</p>
         </div>
         <div class="item">
-            <input type="submit" v-on:click="submit" tabindex="3" id="login-btn" class="btn" value="登陆"/>
+            <input type="submit" v-on:click="submit" tabindex="3" id="login-btn" class="btn" value="登录"/>
         </div>
         <div class="item">
             <div class="col-sm-8">

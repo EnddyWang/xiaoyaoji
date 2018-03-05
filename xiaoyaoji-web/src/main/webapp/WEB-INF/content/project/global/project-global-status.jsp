@@ -52,7 +52,9 @@
     </div>
 </div>
 <script>
-    var global = ${projectGlobal},_projectId_='${project.id}';
+    window.xyj = window.xyj || {};
+    xyj.page.projectId = '${project.id}';
+    var global = ${projectGlobal};
 </script>
 <script src="${assets}/js/project/global.js"></script>
 </div>

@@ -2,7 +2,7 @@ package cn.com.xiaoyaoji;
 
 import cn.com.xiaoyaoji.core.util.ConfigUtils;
 import cn.com.xiaoyaoji.task.SiteMapTask;
-import cn.com.xiaoyaoji.util.PluginUtils;
+import cn.com.xiaoyaoji.utils.PluginUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.log4j.Logger;

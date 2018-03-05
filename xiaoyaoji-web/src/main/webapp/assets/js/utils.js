@@ -3,7 +3,7 @@
         var utils = {
             config: {
                 root: '',
-                ctx: x.ctx,
+                ctx: xyj.ctx,
                 vue: false,
                 websocket: ('ws://' + location.host)
             },
@@ -30,7 +30,7 @@
             },
             ajax: function (params) {
                 var url = this.config.root + params.url;
-                params.url = x.ctx + url;
+                params.url = xyj.ctx + url;
                 params.xhrFields={withCredentials:true};
                 $._ajax_(params);
             },
@@ -120,14 +120,14 @@
                 submit: function (url, data) {
                     utils.post(url, data, function (rs) {
                         localStorage.clear();
-                        location.href = x.ctx + '/dashboard?v='+x.v;
+                        location.href = xyj.ctx + '/dashboard?v='+xyj.v;
                     });
                 },
                 success: function (href) {
                     if (href) {
                         location.href = href;
                     } else {
-                        location.href = x.ctx + '/dashboard?v='+x.v;
+                        location.href = xyj.ctx + '/dashboard?v='+xyj.v;
                     }
                 }
             },
@@ -183,7 +183,7 @@
                     }
                     localStorage.setItem("token", "");
                     localStorage.setItem("user", "");
-                    location.href = x.ctx + '/login?status=expired&refer=' + encodeURIComponent(location.href);
+                    location.href = xyj.ctx + '/login?status=expired&refer=' + encodeURIComponent(location.href);
                 } else {
                     toastr.error(rs.errorMsg);
                 }

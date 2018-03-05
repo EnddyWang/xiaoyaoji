@@ -2,11 +2,10 @@ package cn.xiaoyaoji.plugin.login.weibo;
 
 import cn.com.xiaoyaoji.core.plugin.LoginPlugin;
 import cn.com.xiaoyaoji.core.util.AssertUtils;
-import cn.com.xiaoyaoji.core.util.ConfigUtils;
 import cn.com.xiaoyaoji.data.bean.Thirdparty;
 import cn.com.xiaoyaoji.data.bean.User;
 import cn.com.xiaoyaoji.service.ServiceFactory;
-import cn.com.xiaoyaoji.util.PluginUtils;
+import cn.com.xiaoyaoji.utils.PluginUtils;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;

@@ -2,7 +2,7 @@ package cn.com.xiaoyaoji.controller;
 
 import cn.com.xiaoyaoji.core.annotations.Ignore;
 import cn.com.xiaoyaoji.core.common.Constants;
-import cn.com.xiaoyaoji.util.CacheUtils;
+import cn.com.xiaoyaoji.utils.CacheUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;

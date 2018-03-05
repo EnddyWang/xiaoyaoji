@@ -5,6 +5,7 @@ import cn.com.xiaoyaoji.core.common._HashMap;
 import cn.com.xiaoyaoji.core.exception.NotLoginException;
 import cn.com.xiaoyaoji.core.exception.ServiceException;
 import com.alibaba.fastjson.support.spring.FastJsonJsonView;
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,7 +21,7 @@ import java.net.URLEncoder;
  * @Date: 17/3/30
  */
 public class ExceptionResolver extends SimpleMappingExceptionResolver {
-
+    private Logger logger = Logger.getLogger(getClass());
     @Override
     protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         String from = null;
@@ -41,6 +42,7 @@ public class ExceptionResolver extends SimpleMappingExceptionResolver {
             ModelAndView mv = new ModelAndView(new FastJsonJsonView());
             String errorMsg = ex.getMessage();
             if(!(ex instanceof IllegalArgumentException) && !(ex instanceof ServiceException)){
+                logger.error("",ex);
                 errorMsg = "系统错误";
             }
             if (ex instanceof NotLoginException) {

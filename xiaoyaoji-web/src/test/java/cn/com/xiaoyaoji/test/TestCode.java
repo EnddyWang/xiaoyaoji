@@ -24,4 +24,11 @@ public class TestCode {
         System.out.println("2_0".compareTo("2_0_1"));
         System.out.println("2_1".compareTo("2_0_1"));
     }
+
+    @Test
+    public void test3(){
+        String str="<img class=\"imgToggle\" data-status=\"1\" src=\"http://f1.xiaoyaoji.cn/assets/jsonformat/images/Expanded.gif\"><img class=\"imgToggle\" data-status=\"1\" src=\"http://f1.xiaoyaoji.cn/assets/jsonformat/images/Expanded.gif\"/>";
+        str=str.replaceAll("<img(.*?)>","<img$1/>").replaceAll("<img(.*?)//>","<img$1/>");
+        System.out.println(str);
+    }
 }

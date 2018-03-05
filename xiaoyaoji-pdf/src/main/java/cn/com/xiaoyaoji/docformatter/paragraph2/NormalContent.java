@@ -135,6 +135,7 @@ public class NormalContent extends Paragraph {
             content = content.replace("</br>", "<br>");
             content = content.replace("<br>", "<br></br>");
             content = content.replace("<br/>", "<br></br>");
+            content = content.replaceAll("<img(.*?)>","<img$1/>").replaceAll("<img(.*?)//>","<img$1/>");
             ElementList list = parseToElementList(content);
             for (Element element : list) {
                 add(element);

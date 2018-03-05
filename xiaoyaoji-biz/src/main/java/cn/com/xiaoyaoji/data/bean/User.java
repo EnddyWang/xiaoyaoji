@@ -3,7 +3,7 @@ package cn.com.xiaoyaoji.data.bean;
 import cn.com.xiaoyaoji.core.annotations.Alias;
 import cn.com.xiaoyaoji.core.annotations.Ignore;
 import cn.com.xiaoyaoji.core.util.JsonUtils;
-import cn.com.xiaoyaoji.util.AvatarUtils;
+import cn.com.xiaoyaoji.utils.AvatarUtils;
 
 import java.io.Serializable;
 import java.util.Date;

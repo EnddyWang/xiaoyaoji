@@ -6,16 +6,14 @@ import cn.com.xiaoyaoji.core.plugin.Event;
 import cn.com.xiaoyaoji.core.plugin.PluginInfo;
 import cn.com.xiaoyaoji.core.plugin.PluginManager;
 import cn.com.xiaoyaoji.core.util.AssertUtils;
-import cn.com.xiaoyaoji.data.DataFactory;
 import cn.com.xiaoyaoji.data.bean.Doc;
-import cn.com.xiaoyaoji.data.bean.Project;
 import cn.com.xiaoyaoji.data.bean.Share;
 import cn.com.xiaoyaoji.data.bean.User;
 import cn.com.xiaoyaoji.service.DocService;
 import cn.com.xiaoyaoji.service.ProjectService;
 import cn.com.xiaoyaoji.service.ServiceFactory;
 import cn.com.xiaoyaoji.service.ServiceTool;
-import cn.com.xiaoyaoji.util.SqlUtils;
+import cn.com.xiaoyaoji.utils.SqlUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -83,7 +81,7 @@ public class ShareController {
             }
             resultModel.put("doc",currentDoc);
             if(currentDoc != null) {
-                List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.DOC_EV);
+                List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.DOC);
                 PluginInfo pluginInfo = null;
                 for (PluginInfo info : pluginInfos) {
                     if (currentDoc.getType().equals(info.getId())) {

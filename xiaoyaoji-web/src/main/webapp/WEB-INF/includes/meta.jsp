@@ -9,8 +9,8 @@
 <script>location.href = '../unsupport.html'</script>
 <![endif]-->
 <meta charset="UTF-8">
-<link rel="stylesheet" href="${cdn}/assets/uikit/v3.0.0-beta.30/css/uikit-rtl.min.css">
-<link rel="stylesheet" href="${cdn}/assets/uikit/v3.0.0-beta.30/css/uikit.min.css">
+<link rel="stylesheet" href="http://lib.baomitu.com/uikit/3.0.0-beta.39/css/uikit-rtl.min.css">
+<link rel="stylesheet" href="http://lib.baomitu.com/uikit/3.0.0-beta.39/css/uikit.min.css">
 <link rel="stylesheet" href="${assets}/css/app.css?v=${v}">
 <link rel="alternate" hreflang="zh-hans" href="//www.xiaoyaoji.cn/"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>

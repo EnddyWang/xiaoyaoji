@@ -12,7 +12,7 @@ import cn.com.xiaoyaoji.data.DataFactory;
 import cn.com.xiaoyaoji.data.bean.FindPassword;
 import cn.com.xiaoyaoji.data.bean.Thirdparty;
 import cn.com.xiaoyaoji.data.bean.User;
-import cn.com.xiaoyaoji.util.CacheUtils;
+import cn.com.xiaoyaoji.utils.CacheUtils;
 import cn.com.xiaoyaoji.extension.email.EMailUtils;
 import cn.com.xiaoyaoji.extension.file.FileUtils;
 import cn.com.xiaoyaoji.service.ServiceFactory;

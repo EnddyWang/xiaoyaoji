@@ -99,7 +99,10 @@
 <jsp:include page="/WEB-INF/includes/doc/table/response-headers.jsp"/>
 <jsp:include page="/WEB-INF/includes/doc/table/response-args.jsp"/>
 <script>
-    var global = ${projectGlobal},_projectId_='${project.id}';
+    xyj.page=xyj.page||{};
+    xyj.page.projectId='${project.id}'
+    var global = ${projectGlobal};
+
 </script>
 <script src="${assets}/js/project/global.js"></script>
 </div>

@@ -41,7 +41,6 @@
 
 
 <script>
-    window._edit_ = '${edit}', _projectName_ = '${project.name}', _projectId_ = '${project.id}', _docId_ = '${docId}';
     if(!window.requirejs){
         location.reload();
     }

@@ -3,7 +3,7 @@ package cn.com.xiaoyaoji.resolver;
 import cn.com.xiaoyaoji.core.annotations.Ignore;
 import cn.com.xiaoyaoji.data.bean.User;
 import cn.com.xiaoyaoji.core.common.Constants;
-import cn.com.xiaoyaoji.util.CacheUtils;
+import cn.com.xiaoyaoji.utils.CacheUtils;
 import cn.com.xiaoyaoji.core.exception.ArgumentRequirementException;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.MissingServletRequestParameterException;

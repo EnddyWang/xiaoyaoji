@@ -11,10 +11,8 @@ import cn.com.xiaoyaoji.core.util.AssertUtils;
 import cn.com.xiaoyaoji.core.util.ConfigUtils;
 import cn.com.xiaoyaoji.data.bean.User;
 import cn.com.xiaoyaoji.service.ServiceFactory;
-import cn.com.xiaoyaoji.util.CacheUtils;
+import cn.com.xiaoyaoji.utils.CacheUtils;
 import cn.com.xiaoyaoji.utils.PasswordUtils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;

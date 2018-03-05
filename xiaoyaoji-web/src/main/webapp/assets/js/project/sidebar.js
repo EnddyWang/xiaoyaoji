@@ -13,11 +13,11 @@ $(function () {
             el: '#sidebar',
             data: {
                 submitComment: '',
-                projectName: window._projectName_,
+                projectName: xyj.page.projectName,
                 history: [],
                 g: {
-                    ctx: x.ctx,
-                    edit: _edit_
+                    ctx: xyj.ctx,
+                    edit: xyj.page.editMode
                 },
                 projects: [],
                 shareBox: null,
@@ -48,8 +48,8 @@ $(function () {
             },
             watch: {
                 "projectName": function () {
-                    if (this.projectName !== _projectName_) {
-                        utils.post('/project/' + _projectId_, {name: this.projectName}, function (rs) {
+                    if (this.projectName !== xyj.page.projectName) {
+                        utils.post('/project/' + xyj.page.projectId, {name: this.projectName}, function (rs) {
                             toastr.success('修改成功');
                         });
                     }
@@ -71,10 +71,10 @@ $(function () {
             },
             methods: {
                 loadHistory: function () {
-                    if (_docId_) {
+                    if (xyj.page.docId) {
                         var self = this;
                         self.loading.history = true;
-                        utils.get('/doc/history/' + _docId_, {}, function (rs) {
+                        utils.get('/doc/history/' + xyj.page.docId, {}, function (rs) {
                             self.loading.history = false;
                             self.history = rs.data;
                         });
@@ -92,16 +92,16 @@ $(function () {
 
                 },
                 editpage: function () {
-                    location.href = x.ctx + '/doc/' + window._docId_ + '/edit';
+                    location.href = xyj.ctx + '/doc/' + xyj.page.docId + '/edit';
                 },
                 viewpage: function () {
-                    location.href = x.ctx + '/doc/' + window._docId_;
+                    location.href = xyj.ctx + '/doc/' + xyj.page.docId;
                 },
                 historyURL: function (docId, isEdit, historyId) {
                     if (isEdit) {
-                        return x.ctx + '/doc/' + docId + '/edit?docHistoryId=' + historyId;
+                        return xyj.ctx + '/doc/' + docId + '/edit?docHistoryId=' + historyId;
                     }
-                    return x.ctx + '/doc/' + docId + '?docHistoryId=' + historyId;
+                    return xyj.ctx + '/doc/' + docId + '?docHistoryId=' + historyId;
                 },
                 showProject: function () {
                     $('#sidebar').addClass('layer');
@@ -112,7 +112,7 @@ $(function () {
                         window.submitProjectGlobal();
                     } else {
                         var doc = window.getDoc();
-                        var url = '/doc/' + _docId_;
+                        var url = '/doc/' + xyj.page.docId;
                         utils.post(url, {
                             name: doc.name,
                             comment: this.submitComment,
@@ -136,7 +136,7 @@ $(function () {
                     this.loading.share = true;
                     this.shareBox = 'list';
                     var self = this;
-                    utils.get('/share/project/' + _projectId_, {}, function (rs) {
+                    utils.get('/share/project/' + xyj.page.projectId, {}, function (rs) {
                         self.loading.share = false;
                         rs.data.shares.forEach(function (item) {
                             item.editing = false;
@@ -145,7 +145,7 @@ $(function () {
                     });
 
                     //查询根文档
-                    utils.get('/doc/root/' + _projectId_, {}, function (rs) {
+                    utils.get('/doc/root/' + xyj.page.projectId, {}, function (rs) {
                         self.rootDocs = rs.data.docs;
                     });
 
@@ -165,7 +165,7 @@ $(function () {
                     })
                 },
                 createShare: function () {
-                    this.share.projectId = window._projectId_;
+                    this.share.projectId = window.xyj.page.projectId;
                     if (this.share.chosedIds.length > 0) {
                         this.share.docIds = this.share.chosedIds.toString();
                     }
@@ -179,13 +179,13 @@ $(function () {
                 },
                 loadGlobal: function (type) {
                     if (type === 'http') {
-                        this.global.url = x.ctx + '/project/global/' + _projectId_;
+                        this.global.url = xyj.ctx + '/project/global/' + xyj.page.projectId;
                         this.global.typeName = '全局参数';
                     } else if (type === 'env') {
-                        this.global.url = this.global.url = x.ctx + '/project/global/' + _projectId_ + '/environments';
+                        this.global.url = this.global.url = xyj.ctx + '/project/global/' + xyj.page.projectId + '/environments';
                         this.global.typeName = '环境变量';
                     } else if (type === 'status') {
-                        this.global.url = this.global.url = x.ctx + '/project/global/' + _projectId_ + '/status';
+                        this.global.url = this.global.url = xyj.ctx + '/project/global/' + xyj.page.projectId + '/status';
                         this.global.typeName = '全局状态';
                     }
                     UIkit.modal('#global-modal').show()
@@ -193,7 +193,7 @@ $(function () {
                 loadGlobalEnvironment: function () {
                     this.loading.env = true;
                     var self = this;
-                    utils.get('/project/global/' + _projectId_ + "/environments", {}, function (rs) {
+                    utils.get('/project/global/' + xyj.page.projectId + "/environments", {}, function (rs) {
                         self.loading.env = false;
                         self.global.environment = utils.toJSON(rs.data.global.environment);
                     });
@@ -201,7 +201,7 @@ $(function () {
                 loadGlobalStatus: function () {
                     this.loading.env = true;
                     var self = this;
-                    utils.get('/project/global/' + _projectId_ + "/environments", {}, function (rs) {
+                    utils.get('/project/global/' + xyj.page.projectId + "/environments", {}, function (rs) {
                         self.loading.status = false;
                         self.global.environment = utils.toJSON(rs.data.global.status);
                     });

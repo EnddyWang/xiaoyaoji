@@ -1,7 +1,6 @@
 package cn.com.xiaoyaoji.data;
 
 import cn.com.xiaoyaoji.core.annotations.Ignore;
-import cn.com.xiaoyaoji.core.common.DocType;
 import cn.com.xiaoyaoji.core.common.Pagination;
 import cn.com.xiaoyaoji.core.exception.SystemErrorException;
 import cn.com.xiaoyaoji.core.util.AssertUtils;
@@ -10,8 +9,8 @@ import cn.com.xiaoyaoji.data.bean.*;
 import cn.com.xiaoyaoji.data.handler.IntegerResultHandler;
 import cn.com.xiaoyaoji.data.handler.StringResultHandler;
 import cn.com.xiaoyaoji.integration.file.FileManager;
-import cn.com.xiaoyaoji.util.JdbcUtils;
-import cn.com.xiaoyaoji.util.SqlUtils;
+import cn.com.xiaoyaoji.utils.JdbcUtils;
+import cn.com.xiaoyaoji.utils.SqlUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -34,11 +33,11 @@ import java.util.Map;
  */
 public class DataFactory implements Data {
     private static Logger logger = Logger.getLogger(DataFactory.class);
-    private static Data instance;
+    private static DataFactory instance;
 
     static {
-        final DataFactory impl = new DataFactory();
-        instance = (Data) Proxy.newProxyInstance(impl.getClass().getClassLoader(), impl.getClass().getInterfaces(), new InvocationHandler() {
+        //final DataFactory impl = new DataFactory();
+        /*instance = (Data) Proxy.newProxyInstance(impl.getClass().getClassLoader(), impl.getClass().getInterfaces(), new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 try {
@@ -49,17 +48,19 @@ public class DataFactory implements Data {
                     throw e.getTargetException();
                 }
             }
-        });
+        });*/
+        instance = new DataFactory();
     }
 
     private DataFactory() {
     }
 
-    public static Data instance() {
+    public static DataFactory instance() {
         return instance;
     }
 
-    private <T> T process(Handler<T> handler) {
+
+    public  <T> T process(Handler<T> handler) {
         Connection connection = null;
         try {
             connection = JdbcUtils.getConnect();
@@ -86,6 +87,7 @@ public class DataFactory implements Data {
         }
     }
 
+
     public Connection getConnection() {
         try {
             return JdbcUtils.getConnect();
@@ -98,6 +100,26 @@ public class DataFactory implements Data {
         return new MyQueryRunner();
     }
 
+
+    /**
+     * 检查表是否存在
+     *
+     * @param tableName 表名称
+     * @return true/false
+     */
+    public boolean checkTableExists(String tableName) {
+        return process((connection, qr) -> qr.query(connection, "show tables like ?", new BeanListHandler<Object>(Object.class), tableName).size() > 0);
+    }
+
+    /**
+     * 创建表
+     *
+     * @param createTableSQL 表创建脚本
+     * @return 操作记录数
+     */
+    public int createTable(String createTableSQL) {
+        return process((connection, qr) -> qr.update(connection, createTableSQL));
+    }
 
     @Override
     public int insert(final Object instance) {
@@ -120,6 +142,7 @@ public class DataFactory implements Data {
             }
         });
     }
+
 
     @Override
     public int delete(final Object instance) {
@@ -522,20 +545,21 @@ public class DataFactory implements Data {
 
     /**
      * 复制
+     *
      * @param parentDocId
      * @param newParentDocId
-     * @param projectId 项目id
+     * @param projectId      项目id
      * @return
      */
-    private int copyDocs(String parentDocId, String newParentDocId,String projectId){
+    private int copyDocs(String parentDocId, String newParentDocId, String projectId) {
         //根据父级id查询自节点
         List<String> docIds = getDocIdsByParentId(parentDocId);
         int rs = 0;
-        if(docIds!=null && docIds.size()>0){
-            for(String docId:docIds){
+        if (docIds != null && docIds.size() > 0) {
+            for (String docId : docIds) {
                 String newDocId = StringUtils.id();
-                rs += copyDoc0(docId,newDocId,newParentDocId,projectId);
-                rs += copyDocs(docId,newDocId,projectId);
+                rs += copyDoc0(docId, newDocId, newParentDocId, projectId);
+                rs += copyDocs(docId, newDocId, projectId);
             }
         }
         return rs;
@@ -543,22 +567,24 @@ public class DataFactory implements Data {
 
     /**
      * 复制文档
-     * @param docId         原文档id
-     * @param newDocId      新文档id
-     * @param parentId      父级ID
+     *
+     * @param docId    原文档id
+     * @param newDocId 新文档id
+     * @param parentId 父级ID
      * @return rs
      */
-    private int copyDoc0(String docId,String newDocId,String parentId,String projectId){
-        Doc doc = getById(Doc.class,docId);
-        if(doc == null)
+    private int copyDoc0(String docId, String newDocId, String parentId, String projectId) {
+        Doc doc = getById(Doc.class, docId);
+        if (doc == null) {
             return 0;
+        }
         doc.setCreateTime(new Date());
         doc.setLastUpdateTime(new Date());
         doc.setId(newDocId);
-        if(projectId != null){
+        if (projectId != null) {
             doc.setProjectId(projectId);
         }
-        if(parentId != null) {
+        if (parentId != null) {
             doc.setParentId(parentId);
         }
         return insert(doc);
@@ -566,17 +592,18 @@ public class DataFactory implements Data {
 
     /**
      * 复制文档
+     *
      * @param docId
-     * @param toProjectId   复制到某个项目.如果为空表示当前项目
+     * @param toProjectId 复制到某个项目.如果为空表示当前项目
      * @return
      */
     @Override
-    public int copyDoc(final String docId,String toProjectId) {
+    public int copyDoc(final String docId, String toProjectId) {
         String newDocId = StringUtils.id();
         //如果是复制到其他项目，则直接复制到根目录
-        String parentId = toProjectId==null?null:"0";
-        int rs = copyDoc0(docId,newDocId,parentId,toProjectId);
-        rs += copyDocs(docId,newDocId,toProjectId);
+        String parentId = toProjectId == null ? null : "0";
+        int rs = copyDoc0(docId, newDocId, parentId, toProjectId);
+        rs += copyDocs(docId, newDocId, toProjectId);
         return rs;
     }
 
@@ -587,14 +614,14 @@ public class DataFactory implements Data {
             public String handle(Connection connection, QueryRunner qr) throws SQLException {
                 StringBuilder sql = new StringBuilder();
                 sql.append("select group_concat(name) from doc where id in (");
-                if(docIdsArray.length==0)
+                if (docIdsArray.length == 0)
                     return "";
-                for(String id:docIdsArray){
+                for (String id : docIdsArray) {
                     sql.append("?,");
                 }
-                sql = sql.delete(sql.length()-1,sql.length());
+                sql = sql.delete(sql.length() - 1, sql.length());
                 sql.append(")");
-                return qr.query(connection,sql.toString(),new StringResultHandler(),docIdsArray);
+                return qr.query(connection, sql.toString(), new StringResultHandler(), docIdsArray);
             }
         });
     }
@@ -604,7 +631,7 @@ public class DataFactory implements Data {
         return process(new Handler<List<Doc>>() {
             @Override
             public List<Doc> handle(Connection connection, QueryRunner qr) throws SQLException {
-                return qr.query(connection,"select id,name from doc where projectId=? and parentId=? order by sort asc",new BeanListHandler<>(Doc.class),projectId,parentId);
+                return qr.query(connection, "select id,name from doc where projectId=? and parentId=? order by sort asc", new BeanListHandler<>(Doc.class), projectId, parentId);
             }
         });
     }
@@ -614,11 +641,10 @@ public class DataFactory implements Data {
         return process(new Handler<List<String>>() {
             @Override
             public List<String> handle(Connection connection, QueryRunner qr) throws SQLException {
-                return qr.query(connection,"select id from project where status='VALID' and permission='PUBLIC' order by createTime desc ",new ColumnListHandler<String>("id"));
+                return qr.query(connection, "select id from project where status='VALID' and permission='PUBLIC' order by createTime desc ", new ColumnListHandler<String>("id"));
             }
         });
     }
-
 
 
     @Override
@@ -665,10 +691,10 @@ public class DataFactory implements Data {
         process(new Handler<Object>() {
             @Override
             public Object handle(Connection connection, QueryRunner qr) throws SQLException {
-                List<String> columns = qr.query(connection,"select type from user_third where userId = ?",new ColumnListHandler<String>("type"),user.getId());
-                if(columns!=null && columns.size()>0){
-                    for(String type:columns){
-                        user.getBindingMap().put(type,true);
+                List<String> columns = qr.query(connection, "select type from user_third where userId = ?", new ColumnListHandler<String>("type"), user.getId());
+                if (columns != null && columns.size() > 0) {
+                    for (String type : columns) {
+                        user.getBindingMap().put(type, true);
                     }
                 }
                 return null;
@@ -812,7 +838,6 @@ public class DataFactory implements Data {
     }
 
 
-
     private Object[] getData(Object obj) {
         List<Object> data = new ArrayList<>();
         for (Field field : obj.getClass().getDeclaredFields()) {
@@ -827,8 +852,6 @@ public class DataFactory implements Data {
         }
         return data.toArray();
     }
-
-
 
 
     @Override
@@ -851,11 +874,11 @@ public class DataFactory implements Data {
     }
 
     @Override
-    public ProjectGlobal getProjectGlobal(final String projectId,final String column) {
+    public ProjectGlobal getProjectGlobal(final String projectId, final String column) {
         return process(new Handler<ProjectGlobal>() {
             @Override
             public ProjectGlobal handle(Connection connection, QueryRunner qr) throws SQLException {
-                ProjectGlobal pg = qr.query(connection, "select "+column+" from " + TableNames.PROJECT_GLOBAL + " where projectId=?", new BeanHandler<>(ProjectGlobal.class), projectId);
+                ProjectGlobal pg = qr.query(connection, "select " + column + " from " + TableNames.PROJECT_GLOBAL + " where projectId=?", new BeanHandler<>(ProjectGlobal.class), projectId);
                 if (pg == null) {
                     //会有并发问题
                     pg = generateProjectGlobal(projectId);

@@ -5,25 +5,32 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="hide">
-    <script src="${cdn}/assets/jquery/jquery.min.1.11.js"></script>
-    <script src="${cdn}/assets/uikit/v3.0.0-beta.30/js/uikit.js"></script>
-    <script src="${cdn}/assets/uikit/v3.0.0-beta.30/js/uikit-icons.js"></script>
+    <script src="//lib.baomitu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://lib.baomitu.com/uikit/3.0.0-beta.39/js/uikit.min.js"></script>
+    <script src="http://lib.baomitu.com/uikit/3.0.0-beta.39/js/uikit-icons.min.js"></script>
     <script src="${cdn}/assets/toastr/toastr.min.js"></script>
-    <script src="${cdn}/assets/pace/pace.min.js"></script>
-    <script src="${cdn}/assets/requirejs/require.min.2.3.3.js"></script>
+    <script src="http://lib.baomitu.com/pace/1.0.2/pace.min.js"></script>
+    <script src="http://lib.baomitu.com/require.js/2.3.3/require.min.js"></script>
     <script>
-        window.ctx='${ctx}';
-        window.x={v:'${v}',ctx:'${ctx}',cdn:'http:${cdn}'};
+        if(window.toastr){
+            toastr.options.escapeHtml = true;
+            toastr.options.closeButton = true;
+            toastr.options.positionClass = 'toast-top-center';
+            toastr.options.preventDuplicates=true;
+        }
+        window.xyj = window.xyj || {
+            v:'${v}',ctx:'${ctx}',fileAccess:'${cdn}',cdn:'http://f1.xiaoyaoji.cn'
+        };
 
         requirejs.config({
             baseUrl:'${assets}',
             urlArgs:'v=1',
             paths:{
-                'vue':'${cdn}/assets/vue/vue.2.3.3',
+                'vue':'http://lib.baomitu.com/vue/2.5.13/vue.min',
                 'doc-common':'${assets}/js/doc/doc-common',
-                'jquery':'${cdn}/assets/jquery/jquery.min.1.11',
                 'veeValidate':'${cdn}/assets/vue/vee-validate.min',
-                'vueResource':'${cdn}/assets/vue/vue.resources',
+                //'vueResource':'${cdn}/assets/vue/vue.resources',
+                'vueResource':'http://lib.baomitu.com/vue-resource/1.3.4/vue-resource.min',
                 'vueEx':'${cdn}/assets/vue/vue.ex',
                 'utils':'js/utils'
             }

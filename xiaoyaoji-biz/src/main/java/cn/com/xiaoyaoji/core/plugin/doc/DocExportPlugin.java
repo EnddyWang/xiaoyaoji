@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author zhoujingjie
  *         created on 2017/7/1
  */
-public abstract class DocExportPlugin extends Plugin<DocExportPlugin> {
+public abstract class DocExportPlugin extends Plugin {
 
 
    public abstract void doExport(String projectId, HttpServletResponse response) throws IOException;

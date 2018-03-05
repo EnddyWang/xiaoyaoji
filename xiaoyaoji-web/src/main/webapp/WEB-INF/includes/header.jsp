@@ -16,7 +16,7 @@
             </c:if>
             <c:if test="${sessionScope.user == null}">
                 <div class="user-action fr">
-                    <a class="item" href="${ctx}/login">登陆</a>
+                    <a class="item" href="${ctx}/login">登录</a>
                     <a class="item" href="${ctx}/register">注册</a>
                 </div>
             </c:if>

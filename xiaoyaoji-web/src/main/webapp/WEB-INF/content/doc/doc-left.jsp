@@ -22,7 +22,7 @@
         String firstDocId = docs.get(0).getId();
         request.setAttribute("docId", firstDocId);
     }
-    request.setAttribute("docEvPluginInfos", PluginManager.getInstance().getPlugins(Event.DOC_EV));
+    request.setAttribute("docEvPluginInfos", PluginManager.getInstance().getPlugins(Event.DOC));
     //request.setAttribute("importDocuments", GlobalProperties.getImportDocuments());
 %>
 <div class="doc-left" id="docLeft">
@@ -167,6 +167,8 @@
         本文档由<a href="http://www.xiaoyaoji.cn" target="_blank">小幺鸡</a>编辑
     </div>
 </div>
-<script>window._projectId_ = '${project.id}';
-window._edit_ = '${edit}'</script>
+<script>window.xyj = window.xyj || {};
+xyj.page =xyj.page||{};
+xyj.page.projectId = '${project.id}';
+xyj.page.editMode = '${edit}';</script>
 <script src="${assets}/js/project/left.js?v=${v}"></script>

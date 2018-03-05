@@ -280,6 +280,9 @@
 <jsp:include page="/WEB-INF/includes/doc/table/response-headers.jsp"/>
 <jsp:include page="/WEB-INF/includes/doc/table/response-args.jsp"/>
 <script>
-    var global = ${projectGlobal},_projectId_='${project.id}';
+    var global = ${projectGlobal};
+    window.xyj = window.xyj || {};
+    xyj.page.projectId = '${project.id}';
+    xyj.page.editMode = '${edit}';
 </script>
 <script src="${assets}/js/project/global.js"></script>

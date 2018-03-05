@@ -23,7 +23,17 @@
         </div>
     </div>
     <div id="doc-content">
-
+    <script>
+        window.xyj = window.xyj || {};
+        xyj.page = {
+            event:"doc.edit",
+            pageType:'${doc.type}',
+            docId: '${doc.id}',
+            projectId: '${project.id}',
+            projectName: '${project.name}',
+            editMode: true
+        };
+    </script>
 </c:if>
 <c:if test="${editProjectGlobal}">
     <jsp:include page="../project/global/project-global.jsp"/>
@@ -37,11 +47,23 @@
     </c:if>
 </c:if>
 <script>
-    window._edit_ = '${edit}', _projectName_ = '${project.name}', _projectId_ = '${project.id}', _docId_ = '${docId}';
     if(!window.requirejs){
         location.reload();
     }
 </script>
+
+
+<!-- 加载插件${plugins} -->
+<jsp:include page="/WEB-INF/content/plugin/load.jsp">
+    <jsp:param name="event" value="doc.edit"/>
+    <jsp:param name="docType" value="${doc.type}"/>
+</jsp:include>
+<c:forEach items="${plugins}" var="plugin">
+    <c:set scope="request" var="currentPluginInfo" value="${plugin}"/>
+    <jsp:include page="/WEB-INF/plugins/${plugin.runtimeFolder}/web/edit.jsp"/>
+</c:forEach>
+
+
 <c:if test="${!isXHR}">
     </div>
     </div>

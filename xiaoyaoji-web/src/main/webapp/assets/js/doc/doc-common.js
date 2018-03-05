@@ -6,7 +6,7 @@
                     window.submitProjectGlobal();
                 } else {
                     var doc = window.getDoc();
-                    var url = '/doc/' + _docId_;
+                    var url = '/doc/' + xyj.page.docId;
                     utils.post(url, {
                         name: doc.name,
                         comment: this.submitComment,

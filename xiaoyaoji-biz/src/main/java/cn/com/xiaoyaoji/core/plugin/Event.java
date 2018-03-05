@@ -5,7 +5,21 @@ package cn.com.xiaoyaoji.core.plugin;
  *         created on 2017/6/22
  */
 public enum Event {
-    DOC_EV("doc.ev"),
+    /**
+     * 文档类型
+     */
+    DOC("doc"),
+    /**
+     * 文档编辑
+     */
+    DOC_EDIT("doc.edit"),
+    /**
+     * 文档查看
+     */
+    DOC_VIEW("doc.view"),
+    /**
+     * 文档导出
+     */
     DOC_EXPORT("doc.export"),
     DOC_IMPORT("doc.import"),
     LOGIN("login")

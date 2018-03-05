@@ -1,5 +1,6 @@
+
 $(function(){
-    requirejs(['vue','utils',x.ctx+'/assets/html5sortable/html.sortable.min.js'],function(Vue,utils,sortable){
+    requirejs(['vue','utils',xyj.ctx+'/assets/html5sortable/html.sortable.min.js'],function(Vue,utils,sortable){
 
         function setDocContentHeight(){
             var $d=$('#doc-names');
@@ -13,17 +14,17 @@ $(function(){
             var $docContent =$('#doc-content');
             $docContent.html("");
             $('#loading').show();
-            $.get(x.ctx+url,{_t:Date.now()},function(rs){
+            $.get(xyj.ctx+url,{_t:Date.now()},function(rs){
                 $('#loading').hide();
                 $docContent.html(rs);
-                history.pushState('','',x.ctx+url);
+                history.pushState('','',xyj.ctx+url);
             });
         }
 
         $(window).on({
             resize:setDocContentHeight,
             popstate:function(){
-                loadDoc(location.pathname.substring(x.ctx.length));
+                loadDoc(location.pathname.substring(xyj.ctx.length));
             }
         });
         window.addEventListener('message', function (e) {
@@ -34,14 +35,14 @@ $(function(){
         var app = new Vue({
             el:'#docLeft',
             data:{
-                ctx:x.ctx,
+                ctx:xyj.ctx,
                 menu:{
                     show:false,
                     top:0,
                     left:0,
                     isFolder:true
                 },
-                copiesProjectId:_projectId_, //复制的项目id
+                copiesProjectId:xyj.page.projectId, //复制的项目id
                 projects:[],
                 searchText:'',
                 showSearch:false,
@@ -130,7 +131,7 @@ $(function(){
                         var self =this;
                         utils.post('/doc/copy',{
                             docId:self.target.id,
-                            projectId:_projectId_,
+                            projectId:xyj.page.projectId,
                             toProjectId:self.copiesProjectId
                         },function(){
                             location.reload();
@@ -152,8 +153,8 @@ $(function(){
                        });
                     }else{
                         //新增
-                        utils.post('/doc/',{name:this.createModal.value,parentId:this.target.id,projectId:window._projectId_,type:this.target.type},function(rs){
-                            location.href=x.ctx+"/doc/"+rs.data+"/edit";
+                        utils.post('/doc/',{name:this.createModal.value,parentId:this.target.id,projectId:xyj.page.projectId,type:this.target.type},function(rs){
+                            location.href=xyj.ctx+"/doc/"+rs.data+"/edit";
                         });
                     }
                 },
@@ -194,7 +195,7 @@ $(function(){
                     var self=this;
                     UIkit.modal.confirm('是否确认删除?一旦删除不可恢复').then(function(){
                         utils.delete('/doc/'+self.target.id,function(){
-                            location.href=x.ctx+'/project/'+window._projectId_+"/edit";
+                            location.href=xyj.ctx+'/project/'+xyj.page.projectId+"/edit";
                         })
                     });
                 },
@@ -202,7 +203,7 @@ $(function(){
                     var text= this.searchText;
                     if(text){
                         var self=this;
-                        utils.get('/doc/search',{projectId:window._projectId_,text:text},function(rs){
+                        utils.get('/doc/search',{projectId:xyj.page.projectId,text:text},function(rs){
                             self.searchResults = rs.data.docs;
                             self.showSearch=true;
                         });

@@ -2,7 +2,7 @@ package cn.com.xiaoyaoji.service.domain;
 
 
 import cn.com.xiaoyaoji.core.util.BeanUtils;
-import cn.com.xiaoyaoji.util.AvatarUtils;
+import cn.com.xiaoyaoji.utils.AvatarUtils;
 
 import java.util.Date;
 

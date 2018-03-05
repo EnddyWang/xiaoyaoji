@@ -14,7 +14,7 @@
                     <div class="dl-doc dl-project-name">
                         <div class="doc-name cb ">
                             <span class="el-tree-expand is-leaf"></span>
-                            ${project.name}
+                                ${project.name}
                         </div>
                     </div>
                 </li>
@@ -31,6 +31,8 @@
         本文档由<a href="http://www.xiaoyaoji.com.cn" target="_blank">小幺鸡</a>编辑
     </div>
 </div>
-<script>window._projectId_ = '${project.id}';
-window._edit_ = '${edit}'</script>
+<script>window.xyj = window.xyj || {};
+xyj.page.projectId = '${project.id}';
+xyj.page.editMode = '${edit}';
+</script>
 <script src="${assets}/js/project/left.js?v=${v}"></script>

@@ -12,7 +12,18 @@
     <jsp:include page="doc-left.jsp">
         <jsp:param name="view" value="true"/>
     </jsp:include>
-<div class="doc doc-content">
+    <div class="doc doc-content">
+    <script>
+        window.xyj = window.xyj || {};
+        xyj.page = {
+            event: "doc.edit",
+            pageType: '${doc.type}',
+            docId: '${doc.id}',
+            projectId: '${project.id}',
+            projectName: '${project.name}',
+            editMode: false
+        };
+    </script>
     <div class="hide" id="loading">
         <div class="spinner">
             <div class="double-bounce1"></div>
@@ -40,17 +51,41 @@
 
 
 <script>
-    window._edit_ = '${edit}', _projectName_ = '${project.name}', _projectId_ = '${project.id}', _docId_ = '${docId}';
-    if(!window.requirejs){
+    if (!window.requirejs) {
         location.reload();
     }
 </script>
+<!-- 加载插件${plugins} -->
+<jsp:include page="/WEB-INF/content/plugin/load.jsp">
+    <jsp:param name="event" value="doc.edit"/>
+    <jsp:param name="docType" value="${doc.type}"/>
+</jsp:include>
+<c:forEach items="${plugins}" var="plugin">
+    <c:set scope="request" var="currentPluginInfo" value="${plugin}"/>
+    <jsp:include page="/WEB-INF/plugins/${plugin.runtimeFolder}/web/view.jsp"/>
+</c:forEach>
+
 
 <c:if test="${!isXHR}">
     </div>
     </div>
     <%--</div>--%>
     <!-- loading end -->
+
+    <%--加载插件--%>
+    <%--触发插件--%>
+    <script>
+        window.xyj = window.xyj || {};
+        xyj.page = {
+            event: "doc.view",
+            pageType: '${doc.type}',
+            docId: '${doc.id}',
+            projectId: '${project.id}',
+            projectName: '${project.name}',
+            editMode: false
+        };
+    </script>
+
     </body>
     </html>
 </c:if>

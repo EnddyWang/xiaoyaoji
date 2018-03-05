@@ -1,6 +1,6 @@
 package cn.com.xiaoyaoji.test;
 
-import cn.com.xiaoyaoji.util.JdbcUtils;
+import cn.com.xiaoyaoji.utils.JdbcUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.junit.Test;

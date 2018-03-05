@@ -3,13 +3,15 @@ package cn.com.xiaoyaoji.core.plugin;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author zhoujingjie
- *         created on 2017/5/18
+ * created on 2017/5/18
  */
-public class PluginInfo<T extends Plugin>{
+public class PluginInfo<T extends Plugin> {
     private String id;
     private String name;
     private String description;
@@ -24,9 +26,18 @@ public class PluginInfo<T extends Plugin>{
     //运行时文件夹
     private String runtimeFolder;
 
-    private Map<String,String> config;
+    private Map<String, String> config;
     //运行时目录
     private File runtimeDirectory;
+
+    /**
+     * 支持的页面类型
+     */
+    private Set<String> supportPageTypes;
+    /**
+     *
+     */
+    private Set<String> events;
 
     public String getId() {
         return id;
@@ -84,12 +95,8 @@ public class PluginInfo<T extends Plugin>{
         this.version = version;
     }
 
-    public String getEvent() {
-        return event;
-    }
-
     public void setEvent(String event) {
-        this.event = event;
+        getEvents().add(event);
     }
 
     public T getPlugin() {
@@ -117,7 +124,7 @@ public class PluginInfo<T extends Plugin>{
     }
 
     public Map<String, String> getConfig() {
-        if(config == null){
+        if (config == null) {
             config = new HashMap<>();
         }
         return config;
@@ -156,6 +163,28 @@ public class PluginInfo<T extends Plugin>{
 
     public void setDependency(Dependency dependency) {
         this.dependency = dependency;
+    }
+
+    public Set<String> getSupportPageTypes() {
+        if (supportPageTypes == null) {
+            supportPageTypes = new HashSet<>();
+        }
+        return supportPageTypes;
+    }
+
+    public void setSupportPageTypes(Set<String> supportPageTypes) {
+        this.supportPageTypes = supportPageTypes;
+    }
+
+    public Set<String> getEvents() {
+        if (events == null) {
+            events = new HashSet<>();
+        }
+        return events;
+    }
+
+    public void setEvents(Set<String> events) {
+        this.events = events;
     }
 }
 

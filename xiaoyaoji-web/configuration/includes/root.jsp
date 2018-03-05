@@ -17,5 +17,5 @@
     if(request.getAttribute("fn") == null) {
         request.setAttribute("fn", new JspFn(request));
     }
-    request.setAttribute("cdn","//f1.xiaoyaoji.cn");
+    request.setAttribute("cdn",ConfigUtils.getFileAccessURL());
 %>
