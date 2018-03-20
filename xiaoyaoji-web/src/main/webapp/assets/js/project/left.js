@@ -193,7 +193,7 @@ $(function(){
                 },
                 deleteDoc:function(){
                     var self=this;
-                    UIkit.modal.confirm('是否确认删除?一旦删除不可恢复').then(function(){
+                    UIkit.modal.confirm('是否确认删除'+xyj.page.projectName+'?一旦删除不可恢复').then(function(){
                         utils.delete('/doc/'+self.target.id,function(){
                             location.href=xyj.ctx+'/project/'+xyj.page.projectId+"/edit";
                         })

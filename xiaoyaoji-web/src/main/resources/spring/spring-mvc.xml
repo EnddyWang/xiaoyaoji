@@ -27,7 +27,7 @@
     </bean>
 
     <!-- 视图解析 -->
-    <bean class="cn.com.xiaoyaoji.resolver.AppViewResolver">
+    <bean class="cn.xiaoyaoji.resolver.AppViewResolver">
         <property name="prefix" value="/WEB-INF/content"/>
         <property name="suffix" value=".jsp"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
@@ -45,7 +45,7 @@
     </bean>
 
 
-    <bean class="cn.com.xiaoyaoji.resolver.ExceptionResolver" >
+    <bean class="cn.xiaoyaoji.resolver.ExceptionResolver" >
         <property name="order" value="1"/>
         <property name="defaultErrorView" value="/error"/>
         <property name="exceptionAttribute" value="exception"/>
@@ -65,11 +65,11 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="cn.com.xiaoyaoji.interceptor.AuthorityInterceptor"/>
+            <bean class="cn.xiaoyaoji.interceptor.AuthorityInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <bean id="jsonConverter" class="cn.com.xiaoyaoji.converter.JsonMessageConverter">
+    <bean id="jsonConverter" class="cn.xiaoyaoji.converter.JsonMessageConverter">
         <property name="fastJsonConfig">
             <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
                 <property name="serializerFeatures">
@@ -83,22 +83,24 @@
         </property>
     </bean>
 
+
     <!-- 注解扫描 -->
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
         <mvc:message-converters>
             <ref bean="jsonConverter"/>
         </mvc:message-converters>
         <mvc:argument-resolvers>
-            <bean class="cn.com.xiaoyaoji.resolver.UserArgumentsResolver"/>
+            <bean class="cn.xiaoyaoji.resolver.UserArgumentsResolver"/>
         </mvc:argument-resolvers>
         <mvc:return-value-handlers>
-            <bean class="cn.com.xiaoyaoji.handler.MultiModelAndViewReturnValueHandler">
+            <bean class="cn.xiaoyaoji.handler.MultiModelAndViewReturnValueHandler">
                 <property name="jsonMessageConverter" ref="jsonConverter"/>
             </bean>
         </mvc:return-value-handlers>
     </mvc:annotation-driven>
     <!-- controller扫描 -->
-    <context:component-scan base-package="cn.com.xiaoyaoji.controller" />
+    <context:component-scan base-package="cn.xiaoyaoji.controller" />
+    <context:component-scan base-package="cn.xiaoyaoji.listener" />
 
     <mvc:resources mapping="/assets/**" location="/assets/"/>
     <mvc:resources mapping="/test/**" location="/test/"/>

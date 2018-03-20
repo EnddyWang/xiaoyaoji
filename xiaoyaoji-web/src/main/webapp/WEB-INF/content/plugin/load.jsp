@@ -1,6 +1,6 @@
-<%@ page import="cn.com.xiaoyaoji.core.plugin.PluginManager" %>
-<%@ page import="cn.com.xiaoyaoji.core.plugin.Event" %>
-<%@ page import="cn.com.xiaoyaoji.core.plugin.PluginInfo" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.PluginManager" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.Event" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.PluginInfo" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %><%--
   User: zhoujingjie

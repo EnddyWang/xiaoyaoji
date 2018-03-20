@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="cn.com.xiaoyaoji.core.plugin.PluginManager" %><%--
+<%@ page import="cn.xiaoyaoji.core.plugin.PluginManager" %><%--
   User: zhoujingjie
   Date: 17/4/4
   Time: 13:12

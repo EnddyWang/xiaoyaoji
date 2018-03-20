@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="cn.com.xiaoyaoji.core.plugin.PluginManager" %>
-<%@ page import="cn.com.xiaoyaoji.core.plugin.Event" %><%--
+<%@ page import="cn.xiaoyaoji.core.plugin.PluginManager" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.Event" %><%--
   User: zhoujingjie
   Date: 17/4/8
   Time: 13:33

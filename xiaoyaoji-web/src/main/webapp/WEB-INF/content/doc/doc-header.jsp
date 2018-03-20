@@ -1,3 +1,7 @@
+<%@ page import="cn.xiaoyaoji.core.plugin.PluginManager" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.Event" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.PluginInfo" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   User: zhoujingjie
@@ -43,13 +47,6 @@
                     </ul>
                 </div>
             </li>
-            <li v-on:click="sidebar('loadHistory')">
-                <div class="x-li"><a >历史记录</a></div>
-            </li>
-            <li>
-                <div class="x-li">|</div>
-            </li>
-
             <c:if test="${!edit && editPermission}">
                 <li v-on:click="sidebar('editpage')">
                     <div class="x-li"><a><i class="iconfont icon-edit1"></i>编辑项目</a></div>
@@ -63,6 +60,27 @@
                     <div class="x-li"><a style="color: #1e87f0"><i class="iconfont icon-save"></i>保存</a></div>
                 </li>
             </c:if>
+            <li>
+                <div class="x-li">|</div>
+            </li>
+            <%
+                String e = request.getParameter("event");
+                request.setAttribute("docExtensionPlugins",PluginManager.getInstance().getPlugins(Event.parse(e)));
+            %>
+            <c:forEach items="${docExtensionPlugins}" var="item">
+                <li>
+                    <div class="x-li"><a >${item.plugin.extensionName}</a></div>
+                </li>
+            </c:forEach>
+            <li v-on:click="sidebar('loadHistory')">
+                <div class="x-li"><a >历史记录</a></div>
+            </li>
+            <li>
+                <div class="x-li"><a><i class="iconfont icon-edit1"></i>测试</a></div>
+            </li>
+            <li>
+                <div class="x-li"><a><i class="iconfont icon-edit1"></i>Mock</a></div>
+            </li>
         </ul>
     </div>
     </c:if>

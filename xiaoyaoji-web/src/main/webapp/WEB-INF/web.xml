@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <listener>
-        <listener-class>cn.com.xiaoyaoji.listener.ContextListener</listener-class>
+        <listener-class>cn.xiaoyaoji.listener.ContextListener</listener-class>
     </listener>
 
     <context-param>
@@ -39,7 +39,7 @@
 
     <servlet>
         <servlet-name>proxy</servlet-name>
-        <servlet-class>cn.com.xiaoyaoji.controller.ProxyServlet</servlet-class>
+        <servlet-class>cn.xiaoyaoji.controller.ProxyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>proxy</servlet-name>

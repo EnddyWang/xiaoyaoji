@@ -1,6 +1,6 @@
-<%@ page import="cn.com.xiaoyaoji.core.common._HashMap" %>
-<%@ page import="cn.com.xiaoyaoji.utils.JspFn" %>
-<%@ page import="cn.com.xiaoyaoji.core.util.ConfigUtils" %><%--
+<%@ page import="cn.xiaoyaoji.core.common._HashMap" %>
+<%@ page import="cn.xiaoyaoji.utils.JspFn" %>
+<%@ page import="cn.xiaoyaoji.core.util.ConfigUtils" %><%--
   User: zhoujingjie
   Date: 16/5/22
   Time: 09:21

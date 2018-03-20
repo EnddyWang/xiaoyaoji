@@ -1,0 +1,38 @@
+[
+  {
+    "id": "cn.xiaoyaoji.export.mjson",
+    "name": "导出M-JSON",
+    "clazz": "cn.xiaoyaoji.plugin.impexp.json.JsonExportPlugin",
+    "description": "导出M-JSON",
+    "author": "zhoujingjie",
+    "createTime": "2017/06/21",
+    "version": "2.3.0",
+    "events": [
+      "docExport"
+    ],
+    "icon": {
+      "icon32x32": "/assets/json.png"
+    },
+    "dependency": {
+      "min": "2.3.0"
+    }
+  },
+  {
+    "id": "cn.xiaoyaoji.import.mjson",
+    "name": "导入M-JSON",
+    "clazz": "cn.xiaoyaoji.plugin.impexp.json.JsonImportPlugin",
+    "description": "导入M-JSON",
+    "author": "zhoujingjie",
+    "createTime": "2017/06/21",
+    "version": "2.3.0",
+    "events": [
+      "docImport"
+    ],
+    "icon": {
+      "icon32x32": "/assets/json.png"
+    },
+    "dependency": {
+      "min": "2.3.0"
+    }
+  }
+]

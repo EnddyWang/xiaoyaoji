@@ -57,7 +57,7 @@
 </script>
 <!-- 加载插件${plugins} -->
 <jsp:include page="/WEB-INF/content/plugin/load.jsp">
-    <jsp:param name="event" value="doc.edit"/>
+    <jsp:param name="event" value="docView"/>
     <jsp:param name="docType" value="${doc.type}"/>
 </jsp:include>
 <c:forEach items="${plugins}" var="plugin">
@@ -77,7 +77,7 @@
     <script>
         window.xyj = window.xyj || {};
         xyj.page = {
-            event: "doc.view",
+            event: "docView",
             pageType: '${doc.type}',
             docId: '${doc.id}',
             projectId: '${project.id}',

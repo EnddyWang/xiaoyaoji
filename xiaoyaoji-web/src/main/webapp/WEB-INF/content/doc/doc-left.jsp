@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page import="cn.com.xiaoyaoji.core.plugin.Event" %>
-<%@ page import="cn.com.xiaoyaoji.core.plugin.PluginManager" %>
-<%@ page import="cn.com.xiaoyaoji.data.bean.Doc" %>
-<%@ page import="cn.com.xiaoyaoji.data.bean.Project" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.Event" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.PluginManager" %>
+<%@ page import="cn.xiaoyaoji.data.bean.Doc" %>
+<%@ page import="cn.xiaoyaoji.data.bean.Project" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="java.util.List" %>
-<%@ page import="cn.com.xiaoyaoji.service.DocService" %>
+<%@ page import="cn.xiaoyaoji.service.DocService" %>
 <%--
   User: zhoujingjie
   Date: 17/4/16
@@ -170,5 +170,6 @@
 <script>window.xyj = window.xyj || {};
 xyj.page =xyj.page||{};
 xyj.page.projectId = '${project.id}';
+xyj.page.projectName = '${project.name}';
 xyj.page.editMode = '${edit}';</script>
 <script src="${assets}/js/project/left.js?v=${v}"></script>

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "cn.xiaoyaoji.doc.history",
+    "name": "文档历史记录",
+    "clazz": "cn.xiaoyaoji.plugin.history.HistoryPlugin",
+    "description": "文档历史记录 ",
+    "author": "zhoujingjie",
+    "createTime": "2018/03/20",
+    "version": "2.3.0",
+    "events": [
+      "docViewTab",
+      "docEditTab"
+    ],
+    "icon": {
+      "icon32x32": "/assets/icon.png"
+    },
+    "dependency": {
+      "min": "2.3.0"
+    },
+    "config": {
+      "extensionName": "历史记录"
+    }
+  }
+]

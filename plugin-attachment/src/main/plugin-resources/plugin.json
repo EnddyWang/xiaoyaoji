@@ -7,12 +7,12 @@
     "author": "zhoujingjie",
     "createTime": "2017/06/21",
     "version": "2.2",
-    "events":["doc.edit","doc.view"],
+    "events":["docEdit","docView"],
     "icon":{
       "icon32x32":"/assets/http.png"
     },
     "dependency":{
-      "min":"2.2"
+      "min":"2.3.0"
     },
     "config":{
       "excludeContentTypes":""

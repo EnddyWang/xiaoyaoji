@@ -1,13 +1,14 @@
 package cn.xiaoyaoji.plugin.attachment;
 
-import cn.com.xiaoyaoji.core.common.Result;
-import cn.com.xiaoyaoji.core.plugin.Plugin;
-import cn.com.xiaoyaoji.core.util.AssertUtils;
-import cn.com.xiaoyaoji.core.util.StringUtils;
-import cn.com.xiaoyaoji.data.DataFactory;
-import cn.com.xiaoyaoji.extension.file.FileUtils;
-import cn.com.xiaoyaoji.extension.file.MetaData;
-import cn.com.xiaoyaoji.service.ServiceFactory;
+import cn.xiaoyaoji.core.common.Result;
+import cn.xiaoyaoji.core.plugin.Plugin;
+import cn.xiaoyaoji.core.util.AssertUtils;
+import cn.xiaoyaoji.core.util.StringUtils;
+import cn.xiaoyaoji.data.DataFactory;
+import cn.xiaoyaoji.event.ApplicationEventMulticaster;
+import cn.xiaoyaoji.extension.file.FileUtils;
+import cn.xiaoyaoji.extension.file.MetaData;
+import cn.xiaoyaoji.service.ServiceFactory;
 import cn.xiaoyaoji.plugin.attachment.model.Attachment;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -55,6 +56,7 @@ public class AttachmentPlugin extends Plugin {
 
     @Override
     public void init() {
+        ApplicationEventMulticaster.instance().registerEvent(new DocDeletedListener());
         //数据库初始化
         Map<String, String> config = getPluginInfo().getConfig();
         tableName = config.getOrDefault("tableName", "plugin_attachment");

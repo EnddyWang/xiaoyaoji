@@ -1,6 +1,6 @@
 package cn.xiaoyaoji.plugin.attachment.model;
 
-import cn.com.xiaoyaoji.core.annotations.Alias;
+import cn.xiaoyaoji.core.annotations.Alias;
 
 import java.io.Serializable;
 import java.util.Date;
