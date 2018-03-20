@@ -128,7 +128,7 @@
                     <artifactId>maven-assembly-plugin</artifactId>
                     <configuration>
                         <descriptor>${project.basedir}/../script/bin.xml</descriptor>
-                        <finalName>plugin-${project.artifactId}</finalName>
+                        <finalName>${project.artifactId}</finalName>
                     </configuration>
                     <executions>
                         <execution>
