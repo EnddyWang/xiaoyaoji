@@ -29,6 +29,7 @@ import java.util.Map;
  * @Date: 17/4/11
  */
 
+@Ignore
 @RestController
 @RequestMapping("/plugin")
 public class PluginController {
@@ -43,7 +44,7 @@ public class PluginController {
      */
     @Ignore
     @RequestMapping("/req/{pluginId}/**")
-    public void httpRequest(@PathVariable("pluginId")String pluginId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void httpRequest(@PathVariable("pluginId") String pluginId, HttpServletRequest request, HttpServletResponse response) throws Exception {
         PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
         if (info == null) {
             response.setStatus(503);
@@ -60,18 +61,36 @@ public class PluginController {
         }
     }
 
+    /**
+     * 只能访问web 和assets 两个目录
+     *
+     * @param pluginId
+     * @param folder
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
     @Ignore
-    @RequestMapping("/res/{pluginId}/**")
-    public void resource(@PathVariable("pluginId")String pluginId, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    @RequestMapping("/{folder:web|assets}/{pluginId}/**")
+    public void resource(@PathVariable("pluginId") String pluginId, @PathVariable("folder") String folder,
+                         HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
         if (info == null) {
             response.setStatus(503);
             JsonUtils.write(response.getOutputStream(), new Result(Result.PLUGIN_NOT_FOUND, "plugin not found." + pluginId));
         } else {
-            String path = request.getRequestURI().replace("/plugin/req/" + pluginId, "");
-            request.getRequestDispatcher(PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + path).forward(request, response);
+            String reqURI = request.getRequestURI();
+            String path = reqURI.substring(reqURI.indexOf(pluginId) + pluginId.length() + 1);
+            if (path.contains("jspex")) {
+                path = path.replace("jspex", "jsp");
+            }
+            path = PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + "/" + folder + "/" + path;
+            request.setAttribute("pluginInfo", info);
+            request.getRequestDispatcher(path).forward(request, response);
         }
     }
+
 
     private void checkAuthorization(HttpSession session) {
         AssertUtils.isTrue(session.getAttribute("plugin.config.key") != null, "无操作权限");

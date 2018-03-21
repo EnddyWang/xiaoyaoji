@@ -174,7 +174,7 @@ public class DocController {
             //AssertUtils.isTrue(editPermission || (!editPermission && !editing),"无操作权限");
         }
 
-        List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.DOC);
+        List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.doc);
         PluginInfo pluginInfo = null;
         for (PluginInfo info : pluginInfos) {
             if (doc.getType().equals(info.getId())) {

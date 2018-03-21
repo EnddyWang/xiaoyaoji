@@ -5,15 +5,19 @@ import cn.xiaoyaoji.core.plugin.doc.DocExportPlugin;
 import cn.xiaoyaoji.core.plugin.doc.DocImportPlugin;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * 插件管理
+ *
  * @author zhoujingjie
  * created on 2017/6/21
  */
 public class PluginManager {
 
     private Map<Event, List<PluginInfo>> pluginInfos;
+
     public static PluginManager instance;
 
     static {
@@ -46,7 +50,7 @@ public class PluginManager {
 
     @SuppressWarnings("unchecked")
     public void unload(PluginInfo<?> pluginInfo) {
-        for(Event e:pluginInfo.getEvents()){
+        for (Event e : pluginInfo.getEvents()) {
             List<PluginInfo> temp = pluginInfos.get(e);
             pluginInfo.getPlugin().uninstall();
             pluginInfo.setPlugin(null);
@@ -57,7 +61,7 @@ public class PluginManager {
     }
 
 
-    public List<PluginInfo> getPlugins(Event event) {
+    private List<PluginInfo> getPlugins(Event event) {
         List<PluginInfo> temp = this.pluginInfos.get(event);
         if (temp == null) {
             temp = new CopyOnWriteArrayList<>();
@@ -65,7 +69,6 @@ public class PluginManager {
         }
         return temp;
     }
-
 
 
     public PluginInfo<DocExportPlugin> getExportPlugin(String pluginId) {
@@ -126,8 +129,9 @@ public class PluginManager {
     public PluginInfo getPluginInfo(String pluginId) {
         for (List<PluginInfo> list : pluginInfos.values()) {
             for (PluginInfo item : list) {
-                if (item.getId().equals(pluginId))
+                if (item.getId().equals(pluginId)) {
                     return item;
+                }
             }
         }
         return null;

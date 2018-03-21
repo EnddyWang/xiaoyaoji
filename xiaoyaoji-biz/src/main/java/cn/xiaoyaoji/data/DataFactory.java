@@ -572,8 +572,9 @@ public class DataFactory {
             public String handle(Connection connection, QueryRunner qr) throws SQLException {
                 StringBuilder sql = new StringBuilder();
                 sql.append("select group_concat(name) from doc where id in (");
-                if (docIdsArray.length == 0)
+                if (docIdsArray.length == 0) {
                     return "";
+                }
                 for (String id : docIdsArray) {
                     sql.append("?,");
                 }
@@ -826,5 +827,9 @@ public class DataFactory {
                 return qr.query(connection, "select id from doc where projectId=? order by sort asc ,createTime asc limit 1", new StringResultHandler(), projectId);
             }
         });
+    }
+
+    public List<ProjectPlugin> getProjectPlugins(){
+        return process((connection, qr) -> qr.query(connection,"select id,projectId,pluginId,createTime from project_plugin",new BeanListHandler<ProjectPlugin>(ProjectPlugin.class)));
     }
 }

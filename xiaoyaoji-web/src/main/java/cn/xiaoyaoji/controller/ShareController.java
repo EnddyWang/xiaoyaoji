@@ -81,7 +81,7 @@ public class ShareController {
             }
             resultModel.put("doc",currentDoc);
             if(currentDoc != null) {
-                List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.DOC);
+                List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.doc);
                 PluginInfo pluginInfo = null;
                 for (PluginInfo info : pluginInfos) {
                     if (currentDoc.getType().equals(info.getId())) {
