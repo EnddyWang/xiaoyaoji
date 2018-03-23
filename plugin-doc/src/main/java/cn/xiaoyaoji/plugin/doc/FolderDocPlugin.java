@@ -9,14 +9,4 @@ import cn.xiaoyaoji.core.plugin.doc.DocEvPlugin;
 public class FolderDocPlugin extends DocEvPlugin{
 
 
-    @Override
-    public String getEditPage() {
-        return "folder/edit.jsp";
-    }
-
-    @Override
-    public String getViewPage() {
-        return "folder/view.jsp";
-    }
-
 }

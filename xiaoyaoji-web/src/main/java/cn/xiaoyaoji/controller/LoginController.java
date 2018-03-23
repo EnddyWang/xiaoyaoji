@@ -5,8 +5,8 @@ import cn.xiaoyaoji.core.common.Constants;
 import cn.xiaoyaoji.core.common.Result;
 import cn.xiaoyaoji.core.common._HashMap;
 import cn.xiaoyaoji.core.plugin.LoginPlugin;
+import cn.xiaoyaoji.core.plugin.PlatformPluginManager;
 import cn.xiaoyaoji.core.plugin.PluginInfo;
-import cn.xiaoyaoji.core.plugin.PluginManager;
 import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.core.util.ConfigUtils;
 import cn.xiaoyaoji.data.bean.User;
@@ -66,7 +66,7 @@ public class LoginController {
     @RequestMapping("/plugin")
     @ResponseBody
     public Object plugin(@RequestParam("pluginId") String pluginId, HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        PluginInfo<LoginPlugin> loginPluginInfo =  PluginManager.getInstance().getLoginPlugin(pluginId);
+        PluginInfo<LoginPlugin> loginPluginInfo =  PlatformPluginManager.getInstance().getLoginPlugin(pluginId);
         AssertUtils.isTrue(loginPluginInfo != null,"未找到插件"+pluginId);
         User loginUser = loginPluginInfo.getPlugin().doRequest(request);
         AssertUtils.notNull(loginUser,"登录失败");
@@ -89,7 +89,7 @@ public class LoginController {
     @RequestMapping("/callback/{pluginId}/{action}")
     public void callback(@PathVariable("pluginId") String pluginId, @PathVariable("action") String action,
                          HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        PluginInfo<LoginPlugin> loginPluginInfo =  PluginManager.getInstance().getLoginPlugin(pluginId);
+        PluginInfo<LoginPlugin> loginPluginInfo =  PlatformPluginManager.getInstance().getLoginPlugin(pluginId);
         if(loginPluginInfo == null){
             request.setAttribute("errorMsg","未找到插件"+pluginId);
             request.getRequestDispatcher("/error").forward(request,response);

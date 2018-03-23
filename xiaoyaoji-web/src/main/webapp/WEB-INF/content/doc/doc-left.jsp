@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page import="cn.xiaoyaoji.core.plugin.Event" %>
-<%@ page import="cn.xiaoyaoji.core.plugin.PluginManager" %>
 <%@ page import="cn.xiaoyaoji.data.bean.Doc" %>
 <%@ page import="cn.xiaoyaoji.data.bean.Project" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="java.util.List" %>
 <%@ page import="cn.xiaoyaoji.service.DocService" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.ProjectPluginManager" %>
 <%--
   User: zhoujingjie
   Date: 17/4/16
@@ -22,8 +22,7 @@
         String firstDocId = docs.get(0).getId();
         request.setAttribute("docId", firstDocId);
     }
-    request.setAttribute("docEvPluginInfos", PluginManager.getInstance().getPlugins(Event.DOC));
-    //request.setAttribute("importDocuments", GlobalProperties.getImportDocuments());
+    request.setAttribute("docPluginInfos", ProjectPluginManager.getInstance().getPluginInfos(project.getId(), Event.doc));
 %>
 <div class="doc-left" id="docLeft">
     <c:if test="${edit}">
@@ -31,23 +30,23 @@
             <div class="fl dl-doc-action">
                 <a><i class="el-icon-plus"></i>新建</a>
                 <ul class="dl-menus hide">
-                    <c:forEach items="${docEvPluginInfos}" var="item">
+                    <c:forEach items="${docPluginInfos}" var="item">
                         <li uk-toggle="target: #docCreateModal" v-on:click="createFn('${item.id}',0)">
                             <div data-type="${item.id}" class="dl-menu-name">${item.name}</div>
                         </li>
                     </c:forEach>
                 </ul>
             </div>
-            <%--<div class="fl dl-doc-action">
-                <a><i class="el-icon-upload"></i>导入</a>
-                <ul class="dl-menus hide">
-                    <c:forEach var="document" items="${importDocuments}">
-                        <li>
-                            <div data-type="${document.type}" class="dl-menu-name">${document.name}</div>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>--%>
+                <%--<div class="fl dl-doc-action">
+                    <a><i class="el-icon-upload"></i>导入</a>
+                    <ul class="dl-menus hide">
+                        <c:forEach var="document" items="${importDocuments}">
+                            <li>
+                                <div data-type="${document.type}" class="dl-menu-name">${document.name}</div>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>--%>
         </div>
     </c:if>
 
@@ -59,7 +58,7 @@
                     <div class="dl-doc dl-project-name">
                         <div class="doc-name cb ">
                             <span class="el-tree-expand is-leaf"></span>
-                            ${project.name}
+                                ${project.name}
                         </div>
                     </div>
                 </li>
@@ -75,7 +74,8 @@
                 <div class="dl-doc">
                     <div class="doc-name cb ">
                         <span class="dl-background"></span>
-                        <a class="item-name" v-on:click="itemClick('/doc/'+(item.id)+(edit?'/edit':''),$event)" :href="ctx+'/doc/'+(item.id)+(edit?'/edit':'')">{{item.name}}</a>
+                        <a class="item-name" v-on:click="itemClick('/doc/'+(item.id)+(edit?'/edit':''),$event)"
+                           :href="ctx+'/doc/'+(item.id)+(edit?'/edit':'')">{{item.name}}</a>
                     </div>
                 </div>
             </li>
@@ -127,7 +127,8 @@
             <div class="uk-modal-body">
                 <div>
                     <label>请输入名称:</label>
-                    <input class="uk-input" v-model="createModal.value" v-on:keyup.enter="createSubmit" :value="createModal.value" type="text"
+                    <input class="uk-input" v-model="createModal.value" v-on:keyup.enter="createSubmit"
+                           :value="createModal.value" type="text"
                            autofocus="">
                 </div>
             </div>
@@ -139,7 +140,7 @@
         </div>
     </div>
 
-     <div uk-modal id="docCopyModal" v-cloak>
+    <div uk-modal id="docCopyModal" v-cloak>
         <div class="uk-modal-dialog">
             <div class="uk-modal-body">
                 <form class="uk-form-stacked">
@@ -162,13 +163,12 @@
     </div>
 
 
-
     <div class="dl-placehoder" v-cloak>
         本文档由<a href="http://www.xiaoyaoji.cn" target="_blank">小幺鸡</a>编辑
     </div>
 </div>
 <script>window.xyj = window.xyj || {};
-xyj.page =xyj.page||{};
+xyj.page = xyj.page || {};
 xyj.page.projectId = '${project.id}';
 xyj.page.projectName = '${project.name}';
 xyj.page.editMode = '${edit}';</script>

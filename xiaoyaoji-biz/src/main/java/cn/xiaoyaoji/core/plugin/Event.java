@@ -28,14 +28,6 @@ public enum Event {
      */
     docImport,
     /**
-     * 文档查看模式的tab
-     */
-    docViewTab,
-    /**
-     * 文档编辑模式的tab
-     */
-    docEditTab,
-    /**
      * 登录
      */
     login;

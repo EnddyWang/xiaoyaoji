@@ -5,6 +5,7 @@ import cn.xiaoyaoji.core.common._HashMap;
 import cn.xiaoyaoji.core.plugin.Event;
 import cn.xiaoyaoji.core.plugin.PluginInfo;
 import cn.xiaoyaoji.core.plugin.PluginManager;
+import cn.xiaoyaoji.core.plugin.ProjectPluginManager;
 import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.data.bean.Doc;
 import cn.xiaoyaoji.data.bean.Share;
@@ -25,7 +26,7 @@ import java.util.*;
  * 分享
  *
  * @author zhoujingjie
- *         created on 2017/8/24
+ * created on 2017/8/24
  */
 @RequestMapping("/share")
 @RestController
@@ -54,7 +55,7 @@ public class ShareController {
         }
         password = (String) request.getSession().getAttribute("share_" + id + "_password");
 
-        Map<String,Object> resultModel = new HashMap<>();
+        Map<String, Object> resultModel = new HashMap<>();
 
         //ajax请求
         boolean isXHR = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
@@ -65,23 +66,23 @@ public class ShareController {
             validated = true;
             if (!isXHR) {
                 List<Doc> resultDocs = getDocs(share);
-                if(StringUtils.isBlank(docId) && resultDocs.size()>0){
+                if (StringUtils.isBlank(docId) && resultDocs.size() > 0) {
                     docId = resultDocs.get(0).getId();
                 }
-                resultModel.put("docs",resultDocs);
+                resultModel.put("docs", resultDocs);
             }
 
         }
 
-        if(validated){
+        if (validated) {
             //当前文档
             Doc currentDoc = null;
             if (docId != null) {
                 currentDoc = DocService.instance().getDoc(docId);
             }
-            resultModel.put("doc",currentDoc);
-            if(currentDoc != null) {
-                List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.doc);
+            resultModel.put("doc", currentDoc);
+            if (currentDoc != null) {
+                List<PluginInfo> pluginInfos = ProjectPluginManager.getInstance().getPluginInfos(currentDoc.getProjectId(), Event.doc);
                 PluginInfo pluginInfo = null;
                 for (PluginInfo info : pluginInfos) {
                     if (currentDoc.getType().equals(info.getId())) {
@@ -89,20 +90,19 @@ public class ShareController {
                         break;
                     }
                 }
-                resultModel.put("pluginInfo",pluginInfo);
-                resultModel.put("projectGlobal",ProjectService.instance().getProjectGlobal(currentDoc.getProjectId()));
+                resultModel.put("pluginInfo", pluginInfo);
+                resultModel.put("projectGlobal", ProjectService.instance().getProjectGlobal(currentDoc.getProjectId()));
             }
             //
-            resultModel.put("project",ProjectService.instance().getProject(share.getProjectId()));
+            resultModel.put("project", ProjectService.instance().getProject(share.getProjectId()));
 
         }
 
-        resultModel.put("share",share);
-        resultModel.put("isXHR",isXHR);
+        resultModel.put("share", share);
+        resultModel.put("isXHR", isXHR);
         ModelAndView mav = new ModelAndView("/doc/share/share")
-                .addAllObjects(resultModel)
-                ;
-        if(!validated){
+                .addAllObjects(resultModel);
+        if (!validated) {
             mav.setViewName("/doc/share/share-unvalidated");
         }
         return mav;
@@ -111,6 +111,7 @@ public class ShareController {
 
     /**
      * 查询单个分享内容
+     *
      * @param id
      * @param docId
      * @param password
@@ -125,14 +126,14 @@ public class ShareController {
                                      @RequestParam(value = "password", required = false) String password,
                                      HttpServletRequest request,
                                      User user) {
-        return shareDetails(id,password,request,docId,user);
+        return shareDetails(id, password, request, docId, user);
     }
 
     private List<Doc> getDocs(Share share) {
         Set<String> tempSet = new HashSet<>(Arrays.asList(share.getDocIdsArray()));
         List<Doc> projectDocs = DocService.instance().getProjectDocs(share.getProjectId());
         //如果是查询全部则直接返回所有doc
-        if(Share.ShareAll.YES.equals(share.getShareAll())){
+        if (Share.ShareAll.YES.equals(share.getShareAll())) {
             return projectDocs;
         }
 
@@ -192,20 +193,21 @@ public class ShareController {
 
     /**
      * 新增
+     *
      * @param share
      * @param user
      * @return
      */
     @PostMapping
-    public int create(Share share,User user){
-        AssertUtils.notNull(share.getName(),"分享名称不能为空");
-        AssertUtils.notNull(share.getProjectId(),"missing projectId");
+    public int create(Share share, User user) {
+        AssertUtils.notNull(share.getName(), "分享名称不能为空");
+        AssertUtils.notNull(share.getProjectId(), "missing projectId");
         share.setCreateTime(new Date());
         share.setId(cn.xiaoyaoji.core.util.StringUtils.id());
-        ServiceTool.checkUserHasEditPermission(share.getProjectId(),user);
+        ServiceTool.checkUserHasEditPermission(share.getProjectId(), user);
         share.setUserId(user.getId());
         int rs = ServiceFactory.instance().create(share);
-        AssertUtils.isTrue(rs>0,"操作失败");
+        AssertUtils.isTrue(rs > 0, "操作失败");
         return rs;
     }
 }

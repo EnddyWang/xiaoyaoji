@@ -2,14 +2,15 @@ package cn.xiaoyaoji.plugin.attachment;
 
 import cn.xiaoyaoji.core.common.Result;
 import cn.xiaoyaoji.core.plugin.Plugin;
+import cn.xiaoyaoji.core.plugin.doc.DocEvPlugin;
 import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.core.util.StringUtils;
 import cn.xiaoyaoji.data.DataFactory;
 import cn.xiaoyaoji.event.ApplicationEventMulticaster;
 import cn.xiaoyaoji.extension.file.FileUtils;
 import cn.xiaoyaoji.extension.file.MetaData;
-import cn.xiaoyaoji.service.ServiceFactory;
 import cn.xiaoyaoji.plugin.attachment.model.Attachment;
+import cn.xiaoyaoji.service.ServiceFactory;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
@@ -45,7 +46,7 @@ import java.util.*;
  * @author zhoujingjie
  * Date 2018-01-27
  */
-public class AttachmentPlugin extends Plugin {
+public class AttachmentPlugin extends DocEvPlugin {
     private Logger logger = LoggerFactory.getLogger(getClass());
     private String tableName = "plugin_attachment";
     /**
@@ -170,4 +171,5 @@ public class AttachmentPlugin extends Plugin {
         }
         DataFactory.instance().delete(tableName, id);
     }
+
 }

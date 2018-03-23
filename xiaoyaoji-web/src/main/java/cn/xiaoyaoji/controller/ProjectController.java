@@ -4,8 +4,10 @@ import cn.xiaoyaoji.core.annotations.Ignore;
 import cn.xiaoyaoji.core.common.Message;
 import cn.xiaoyaoji.core.common.Pagination;
 import cn.xiaoyaoji.core.common._HashMap;
+import cn.xiaoyaoji.core.plugin.PlatformPluginManager;
 import cn.xiaoyaoji.core.plugin.PluginInfo;
 import cn.xiaoyaoji.core.plugin.PluginManager;
+import cn.xiaoyaoji.core.plugin.ProjectPluginManager;
 import cn.xiaoyaoji.core.plugin.doc.DocExportPlugin;
 import cn.xiaoyaoji.core.plugin.doc.DocImportPlugin;
 import cn.xiaoyaoji.core.util.AssertUtils;
@@ -135,7 +137,7 @@ public class ProjectController {
         AssertUtils.notNull(project, Message.PROJECT_NOT_FOUND);
         ServiceTool.checkUserHasAccessPermission(project, user);
 
-        PluginInfo<DocExportPlugin> docExportPluginPluginInfo = PluginManager.getInstance().getExportPlugin(pluginId);
+        PluginInfo<DocExportPlugin> docExportPluginPluginInfo = ProjectPluginManager.getInstance().getExportPlugin(pluginId);
         AssertUtils.notNull(docExportPluginPluginInfo,"不支持该操作");
         docExportPluginPluginInfo.getPlugin().doExport(id,response);
     }
@@ -152,7 +154,7 @@ public class ProjectController {
                                 @RequestParam(value = "projectId",required = false) String projectId,
                                 @RequestParam(value = "parentId",required = false) String parentId
                                 ) throws IOException {
-        PluginInfo<DocImportPlugin> docImportPluginPluginInfo = PluginManager.getInstance().getImportPlugin(pluginId);
+        PluginInfo<DocImportPlugin> docImportPluginPluginInfo = PlatformPluginManager.getInstance().getImportPlugin(pluginId);
         AssertUtils.notNull(docImportPluginPluginInfo,"不支持该操作");
         docImportPluginPluginInfo.getPlugin().doImport(file.getName(),file.getInputStream(),user.getId(),projectId,parentId);
         return true;

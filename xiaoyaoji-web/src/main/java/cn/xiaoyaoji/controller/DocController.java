@@ -9,6 +9,7 @@ import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.core.util.StringUtils;
 import cn.xiaoyaoji.data.bean.Doc;
 import cn.xiaoyaoji.data.bean.Project;
+import cn.xiaoyaoji.data.bean.ProjectPlugin;
 import cn.xiaoyaoji.data.bean.User;
 import cn.xiaoyaoji.event.ApplicationEventMulticaster;
 import cn.xiaoyaoji.event.DocCreatedEvent;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: zhoujingjie
@@ -149,6 +151,7 @@ public class DocController {
                                 HttpServletRequest request,
                                 boolean editing
     ) {
+
         AssertUtils.notNull(docId, "参数丢失");
         Doc doc = null;
         if (org.apache.commons.lang3.StringUtils.isNotBlank(docHistoryId)) {
@@ -156,6 +159,9 @@ public class DocController {
         } else {
             doc = DocService.instance().getDoc(docId);
         }
+        Map<Event, List<PluginInfo>> map = ProjectPluginManager.getInstance().getProjectPluginInfoMap(doc.getProjectId());
+        map.putAll(PluginManager.getInstance().getPluginInfos());
+
         AssertUtils.notNull(doc, "文档不可见或已删除");
         //获取project
         Project project = ProjectService.instance().getProject(doc.getProjectId());
@@ -174,7 +180,7 @@ public class DocController {
             //AssertUtils.isTrue(editPermission || (!editPermission && !editing),"无操作权限");
         }
 
-        List<PluginInfo> pluginInfos = PluginManager.getInstance().getPlugins(Event.doc);
+        List<PluginInfo> pluginInfos = ProjectPluginManager.getInstance().getPluginInfos(doc.getProjectId(), Event.doc);
         PluginInfo pluginInfo = null;
         for (PluginInfo info : pluginInfos) {
             if (doc.getType().equals(info.getId())) {
@@ -183,7 +189,7 @@ public class DocController {
             }
         }
         boolean isXHR = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
-        return new ModelAndView("/doc/view")
+        return new ModelAndView("/doc/doc")
                 .addObject("project", project)
                 .addObject("doc", doc)
                 .addObject("user", user)
@@ -207,7 +213,6 @@ public class DocController {
                                 @RequestParam(value = "docHistoryId", required = false) String docHistoryId, User user, HttpServletRequest request) {
         ModelAndView view = docView(docId, docHistoryId, user, request, true)
                 .addObject("edit", true);
-        view.setViewName("/doc/edit");
         return view;
     }
 

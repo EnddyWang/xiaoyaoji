@@ -13,9 +13,9 @@
             created: function () {
                 this.pluginId = null;
                 this.loadData();
-                /*if(!xyj.page.editMode){
+                if(!xyj.page.editMode){
                     $('#plugin-attachment').insertBefore($('#doc-demo'));
-                }*/
+                }
             },
             methods: {
                 loadData: function () {

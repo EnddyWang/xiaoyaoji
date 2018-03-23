@@ -14,6 +14,7 @@ import java.util.Set;
 public class PluginInfo<T extends Plugin> {
     private String id;
     private String name;
+    private String shortName;
     private String description;
     private String author;
     private String createTime;
@@ -188,6 +189,18 @@ public class PluginInfo<T extends Plugin> {
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    public String getShortName() {
+        if(shortName == null) {
+            return getName();
+        }
+        return shortName;
+    }
+
+    public PluginInfo setShortName(String shortName) {
+        this.shortName = shortName;
+        return this;
     }
 }
 

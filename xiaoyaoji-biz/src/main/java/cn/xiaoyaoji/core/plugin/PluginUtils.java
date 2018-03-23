@@ -1,13 +1,9 @@
-package cn.xiaoyaoji.utils;
+package cn.xiaoyaoji.core.plugin;
 
 import cn.xiaoyaoji.core.common.Constants;
-import cn.xiaoyaoji.core.plugin.Dependency;
-import cn.xiaoyaoji.core.plugin.Plugin;
-import cn.xiaoyaoji.core.plugin.PluginInfo;
-import cn.xiaoyaoji.core.plugin.PluginManager;
 import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.core.util.ConfigUtils;
-import cn.xiaoyaoji.core.plugin.Dependency;
+import cn.xiaoyaoji.utils.ZipUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import org.apache.commons.io.FileUtils;

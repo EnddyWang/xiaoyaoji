@@ -8,8 +8,8 @@
     "createTime": "2018/03/20",
     "version": "2.3.0",
     "events": [
-      "docViewTab",
-      "docEditTab"
+      "docView",
+      "docEdit"
     ],
     "icon": {
       "icon32x32": "/assets/icon.png"

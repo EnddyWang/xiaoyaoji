@@ -2,6 +2,8 @@
 <%@ page import="cn.xiaoyaoji.core.plugin.Event" %>
 <%@ page import="cn.xiaoyaoji.core.plugin.PluginInfo" %>
 <%@ page import="java.util.List" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.PlatformPluginManager" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.doc.DocImportPlugin" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   User: zhoujingjie
@@ -10,7 +12,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<PluginInfo> importPlugins= PluginManager.getInstance().getPlugins(Event.DOC_IMPORT);
+    List<PluginInfo<DocImportPlugin>> importPlugins= PlatformPluginManager.getInstance().getImportPlugins();
     request.setAttribute("importPlugins",importPlugins);
 %>
 <!DOCTYPE html>

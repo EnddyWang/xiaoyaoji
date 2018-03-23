@@ -2,7 +2,7 @@ package cn.xiaoyaoji.controller;
 
 import cn.xiaoyaoji.core.plugin.PluginInfo;
 import cn.xiaoyaoji.core.plugin.PluginManager;
-import cn.xiaoyaoji.utils.PluginUtils;
+import cn.xiaoyaoji.core.plugin.PluginUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

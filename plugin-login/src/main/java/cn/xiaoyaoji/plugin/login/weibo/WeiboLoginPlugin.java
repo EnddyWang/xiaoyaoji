@@ -5,7 +5,7 @@ import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.data.bean.Thirdparty;
 import cn.xiaoyaoji.data.bean.User;
 import cn.xiaoyaoji.service.ServiceFactory;
-import cn.xiaoyaoji.utils.PluginUtils;
+import cn.xiaoyaoji.core.plugin.PluginUtils;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;

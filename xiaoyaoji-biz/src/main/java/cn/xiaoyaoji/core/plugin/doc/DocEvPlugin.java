@@ -13,11 +13,15 @@ public abstract class DocEvPlugin extends Plugin<DocEvPlugin> {
     /**
      * @return 编辑页面
      */
-    public abstract String getEditPage();
+    public String getEditPage(){
+        return "edit.jsp";
+    }
 
     /**
      * @return 查看页面
      */
-    public abstract String getViewPage();
+    public String getViewPage(){
+        return "view.jsp";
+    }
 
 }

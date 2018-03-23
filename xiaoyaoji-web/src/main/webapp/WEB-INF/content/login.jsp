@@ -1,12 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="cn.xiaoyaoji.core.plugin.PluginManager" %><%--
+<%@ page import="cn.xiaoyaoji.core.plugin.PluginManager" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.PlatformPluginManager" %><%--
   User: zhoujingjie
   Date: 17/4/4
   Time: 13:12
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    request.setAttribute("loginPlugins",PluginManager.getInstance().getLoginPlugins());
+    request.setAttribute("loginPlugins", PlatformPluginManager.getInstance().getLoginPlugins());
 %>
 <!--[if lt IE 9]> <script>location.href='unsupport.html?refer='+encodeURIComponent(location.href)</script> <![endif]-->
 <!DOCTYPE html>

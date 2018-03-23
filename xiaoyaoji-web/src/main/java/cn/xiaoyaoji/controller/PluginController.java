@@ -10,7 +10,7 @@ import cn.xiaoyaoji.core.util.ConfigUtils;
 import cn.xiaoyaoji.core.util.JsonUtils;
 import cn.xiaoyaoji.core.util.StringUtils;
 import cn.xiaoyaoji.entity.MapParameter;
-import cn.xiaoyaoji.utils.PluginUtils;
+import cn.xiaoyaoji.core.plugin.PluginUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;

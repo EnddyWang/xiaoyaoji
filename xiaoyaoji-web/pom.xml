@@ -25,7 +25,7 @@
         <profile>
             <id>prod</id>
             <properties>
-                <xyj.version>2.2</xyj.version>
+                <xyj.version>2.3.0</xyj.version>
                 <druid.username>admin</druid.username>
                 <druid.password>123</druid.password>
             </properties>

@@ -1,11 +1,8 @@
 package cn.xiaoyaoji.core.plugin;
 
-import cn.xiaoyaoji.core.plugin.doc.DocEvPlugin;
-import cn.xiaoyaoji.core.plugin.doc.DocExportPlugin;
-import cn.xiaoyaoji.core.plugin.doc.DocImportPlugin;
-
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -61,7 +58,7 @@ public class PluginManager {
     }
 
 
-    private List<PluginInfo> getPlugins(Event event) {
+    List<PluginInfo> getPlugins(Event event) {
         List<PluginInfo> temp = this.pluginInfos.get(event);
         if (temp == null) {
             temp = new CopyOnWriteArrayList<>();
@@ -70,60 +67,6 @@ public class PluginManager {
         return temp;
     }
 
-
-    public PluginInfo<DocExportPlugin> getExportPlugin(String pluginId) {
-        List<PluginInfo> list = getPlugins(Event.docExport);
-        for (PluginInfo temp : list) {
-            if (temp.getId().equals(pluginId)) {
-                return temp;
-            }
-        }
-        return null;
-    }
-
-    public PluginInfo<DocImportPlugin> getImportPlugin(String pluginId) {
-        List<PluginInfo> list = getPlugins(Event.docImport);
-        for (PluginInfo temp : list) {
-            if (temp.getId().equals(pluginId)) {
-                return temp;
-            }
-        }
-        return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<PluginInfo<DocEvPlugin>> getDocEvPlugins() {
-        List<PluginInfo> pluginInfos = getPlugins(Event.doc);
-        List<PluginInfo<DocEvPlugin>> temp = new ArrayList<>(pluginInfos.size());
-        for (PluginInfo item : pluginInfos) {
-            temp.add(item);
-        }
-        return temp;
-    }
-
-    public List<PluginInfo<LoginPlugin>> getLoginPlugins() {
-        List<PluginInfo> pluginInfos = getPlugins(Event.login);
-        List<PluginInfo<LoginPlugin>> temp = new ArrayList<>(pluginInfos.size());
-        for (PluginInfo item : pluginInfos) {
-            temp.add(item);
-        }
-        return temp;
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends Plugin> PluginInfo<T> getPlugin(String pluginId, Event event) {
-        List<PluginInfo> plugins = getPlugins(event);
-        for (PluginInfo<T> pluginInfo : plugins) {
-            if (pluginInfo.getId().equals(pluginId)) {
-                return pluginInfo;
-            }
-        }
-        return null;
-    }
-
-    public PluginInfo<LoginPlugin> getLoginPlugin(String pluginId) {
-        return getPlugin(pluginId, Event.login);
-    }
 
 
     public PluginInfo getPluginInfo(String pluginId) {
@@ -136,4 +79,6 @@ public class PluginManager {
         }
         return null;
     }
+
+
 }

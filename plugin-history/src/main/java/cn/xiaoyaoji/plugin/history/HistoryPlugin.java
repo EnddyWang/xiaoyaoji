@@ -1,7 +1,6 @@
 package cn.xiaoyaoji.plugin.history;
 
-import cn.xiaoyaoji.core.plugin.Plugin;
-import cn.xiaoyaoji.core.plugin.doc.DocExtensionPlugin;
+import cn.xiaoyaoji.core.plugin.doc.DocEvPlugin;
 import cn.xiaoyaoji.core.util.ResultUtils;
 import cn.xiaoyaoji.data.DataFactory;
 import cn.xiaoyaoji.data.bean.TableNames;
@@ -33,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author zhoujingjie
  * Date 2018-03-20
  */
-public class HistoryPlugin extends DocExtensionPlugin {
+public class HistoryPlugin extends DocEvPlugin {
     private String TABLE_NAME = "plugin_history";
 
     @Override
@@ -74,20 +73,5 @@ public class HistoryPlugin extends DocExtensionPlugin {
             }));
         }
         return null;
-    }
-
-    @Override
-    public String getExtensionName() {
-        return getPluginInfo().getConfig().getOrDefault("extensionName", "历史记录");
-    }
-
-    @Override
-    public String getEditPage() {
-        return "/web/view.jsp";
-    }
-
-    @Override
-    public String getViewPage() {
-        return "/web/view.jsp";
     }
 }
