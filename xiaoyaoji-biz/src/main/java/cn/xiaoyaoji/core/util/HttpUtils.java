@@ -11,7 +11,8 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,7 +22,7 @@ import java.util.Map;
  * @date 2016-05-13
  */
 public class HttpUtils {
-    private static Logger log = Logger.getLogger(HttpUtils.class);
+    private static Logger log = LoggerFactory.getLogger(HttpUtils.class);
     private static HttpClient client;
 
     static {

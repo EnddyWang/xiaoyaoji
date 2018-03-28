@@ -167,9 +167,4 @@
         本文档由<a href="http://www.xiaoyaoji.cn" target="_blank">小幺鸡</a>编辑
     </div>
 </div>
-<script>window.xyj = window.xyj || {};
-xyj.page = xyj.page || {};
-xyj.page.projectId = '${project.id}';
-xyj.page.projectName = '${project.name}';
-xyj.page.editMode = '${edit}';</script>
 <script src="${assets}/js/project/left.js?v=${v}"></script>

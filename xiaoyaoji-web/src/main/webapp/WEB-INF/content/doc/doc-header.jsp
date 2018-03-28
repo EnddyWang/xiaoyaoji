@@ -27,7 +27,6 @@
     <jsp:include page="/WEB-INF/includes/js.jsp"/>
 </head>
 <body>
-
 <div class="xd-header cb" id="xd-header">
     <c:if test="${sessionScope.user != null && editPermission}">
         <div class="fl">
@@ -89,7 +88,7 @@
                 <li>
                     <div class="x-li">|</div>
                 </li>
-                <li>
+                <li v-on:click="docExtClick('default','${edit}')">
                     <div class="x-li"><a style="color: #1e87f0">文档${docExtPluginInfos.size()}</a></div>
                 </li>
 
@@ -161,7 +160,19 @@
 </div>
 <div class="xd-header-placeholder"></div>
 <script src="${assets}/js/project/doc/doc.js?v=${v}"></script>
-
 <%--<div class="doc">--%>
-<script>window._isGlobal_ = '${editProjectGlobal}'</script>
-
+<script>
+    (function(){
+        window._isGlobal_ = '${editProjectGlobal}'
+        window.xyj = window.xyj || {};
+        xyj.page = xyj.page || {};
+        $.extend(xyj.page,{
+            event: "${edit?'docEdit':'docView'}",
+            pageType: '${doc.type}',
+            docId: '${doc.id}',
+            projectId: '${project.id}',
+            projectName: '${project.name}',
+            editMode: ${edit?true:false}
+        });
+    })();
+</script>

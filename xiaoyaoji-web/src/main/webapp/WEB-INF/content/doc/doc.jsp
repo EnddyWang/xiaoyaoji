@@ -10,21 +10,9 @@
         <jsp:param name="event" value="${edit?'docEdit':'docView'}"/>
     </jsp:include>
     <jsp:include page="doc-sidebar.jsp"/>
-    <jsp:include page="doc-left.jsp">
-        <jsp:param name="view" value="true"/>
-    </jsp:include>
+    <jsp:include page="doc-left.jsp"/>
     <div class="doc doc-content">
-    <script>
-        window.xyj = window.xyj || {};
-        xyj.page = {
-            event: "doc.edit",
-            pageType: '${doc.type}',
-            docId: '${doc.id}',
-            projectId: '${project.id}',
-            projectName: '${project.name}',
-            editMode: false
-        };
-    </script>
+
     <div class="hide" id="loading">
         <div class="spinner">
             <div class="double-bounce1"></div>
@@ -33,7 +21,7 @@
     </div>
 
     <div class="doc-full-width" id="doc-content">
-    <div id="pandel_default" v-show="activePanelId == 'default'">
+    <div id="panel_default" class="doc-panel">
 </c:if>
 <c:if test="${editProjectGlobal}">
     <jsp:include page="../project/global/project-global.jsp"/>
@@ -55,7 +43,7 @@
 </div>
 
 <c:forEach items="${docExtPluginInfos}" var="item">
-    <div id="panel_${item.id}" v-cloak v-show="activePanelId == '${item.id}'"></div>
+    <div id="panel_${item.id}" v-cloak class="doc-panel"></div>
 </c:forEach>
 
 
@@ -69,18 +57,6 @@
     </div>
     <%--</div>--%>
     <!-- loading end -->
-    <script>
-        window.xyj = window.xyj || {};
-        xyj.page = {
-            event: "docView",
-            pageType: '${doc.type}',
-            docId: '${doc.id}',
-            projectId: '${project.id}',
-            projectName: '${project.name}',
-            editMode: false
-        };
-    </script>
-
     </body>
     </html>
 </c:if>

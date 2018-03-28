@@ -1,5 +1,5 @@
 (function () {
-    require(['vue','utils'], function (Vue) {
+    require(['vue','utils'], function (Vue,utils) {
         //传递消息给sidebar.js 
         function pushMessage(method, args) {
             window.postMessage({type: 'event', method: method, args: args}, '*')
@@ -21,27 +21,25 @@
                     pushMessage(method, newArgs);
                 },
                 docExtClick: function (pluginId, editMode) {
-                    this.activePanelId = pluginId;
-                    var $panel = $('#panel_'+pluginId);
-                    if($panel.data('loaded')){
+                    $('.doc-panel').hide();
+                    var id = 'panel_'+pluginId;
+                    var dom = document.getElementById(id);
+                    var $panel = $(dom);
+                    $panel.show();
+                    if($panel.data('loaded') || pluginId ==='default'){
                         return;
                     }
-                    $("loading").show();
-                    var page = editMode?'/editpage/':'/viewpage/';
-                    utils.ajax({
-                        url: '/plugin'+page+pluginId,type:'get',
+                    $("#loading").show();
+                    var page = editMode?'/doc/ep/':'/doc/vp/';
+                    $.ajax({
+                        url: '/plugin'+page+pluginId+'/',type:'get',
                         complete:function(){
-                            $("loading").hide();
+                            $("#loading").hide();
                         },
                         success:function(content){
-                            $('#panel_'+pluginId).attr('data-loaded','1').html(content);
+                            $panel.attr('data-loaded','1').html(content);
                         }
                     });
-                    if (editMode) {
-                        utils.get();
-                    }else {
-
-                    }
                 }
             }
         })

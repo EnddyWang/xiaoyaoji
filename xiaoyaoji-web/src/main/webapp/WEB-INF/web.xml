@@ -8,15 +8,6 @@
     <listener>
         <listener-class>cn.xiaoyaoji.listener.ContextListener</listener-class>
     </listener>
-
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:/spring/application.xml</param-value>
-    </context-param>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <!--<url-pattern>*.css</url-pattern>

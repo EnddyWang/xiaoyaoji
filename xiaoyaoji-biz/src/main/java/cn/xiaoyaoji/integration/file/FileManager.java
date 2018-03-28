@@ -1,7 +1,8 @@
 package cn.xiaoyaoji.integration.file;
 
 import cn.xiaoyaoji.core.util.ConfigUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 文件操作管理器
@@ -10,12 +11,12 @@ import org.apache.log4j.Logger;
  */
 public class FileManager {
     private static FileProvider fileProvider;
-    private static Logger logger = Logger.getLogger(FileManager.class);
+    private static Logger logger = LoggerFactory.getLogger(FileManager.class);
 
     static {
-        String uploadProviderClasss = ConfigUtils.getProperty("file.upload.provider");
+        String uploadProviderClazz = ConfigUtils.getProperty("file.upload.provider");
         try {
-            fileProvider = (FileProvider) Class.forName(uploadProviderClasss).newInstance();
+            fileProvider = (FileProvider) Class.forName(uploadProviderClazz).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             logger.error(e.getMessage(), e);
         }

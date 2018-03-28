@@ -2,9 +2,11 @@ package cn.xiaoyaoji.controller;
 
 import cn.xiaoyaoji.core.annotations.Ignore;
 import cn.xiaoyaoji.core.common.Result;
+import cn.xiaoyaoji.core.exception.PluginNotFoundException;
 import cn.xiaoyaoji.core.plugin.Event;
 import cn.xiaoyaoji.core.plugin.PluginInfo;
 import cn.xiaoyaoji.core.plugin.PluginManager;
+import cn.xiaoyaoji.core.plugin.doc.DocPlugin;
 import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.core.util.ConfigUtils;
 import cn.xiaoyaoji.core.util.JsonUtils;
@@ -62,6 +64,45 @@ public class PluginController {
     }
 
     /**
+     * 文档编辑页面
+     * @param pluginId 插件id
+     */
+    @Ignore
+    @GetMapping("/doc/ep/{pluginId}")
+    public void editPage(@PathVariable("pluginId") String pluginId, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+        PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
+        if (info == null) {
+            throw new PluginNotFoundException("the plugin "+pluginId+" is not found");
+        }
+        if (!(info.getPlugin() instanceof DocPlugin)) {
+            throw new PluginNotFoundException("the plugin "+pluginId+" is not doc plugin");
+        }
+        String path = PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + "/web/" + ((DocPlugin) info.getPlugin()).getEditPage();
+        request.setAttribute("pluginInfo",info);
+        request.getRequestDispatcher(path).forward(request, response);
+    }
+
+    /**
+     * 文档查看页面
+     * @param pluginId  插件id
+     */
+    @Ignore
+    @GetMapping("/doc/vp/{pluginId}")
+    public void viewPage(@PathVariable("pluginId") String pluginId,HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+        PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
+        if (info == null) {
+            throw new PluginNotFoundException("the plugin "+pluginId+" is not found");
+        }
+        if (!(info.getPlugin() instanceof DocPlugin)) {
+            throw new PluginNotFoundException("the plugin "+pluginId+" is not doc plugin");
+        }
+        String path = PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + "/web/" + ((DocPlugin) info.getPlugin()).getViewPage();
+        request.setAttribute("pluginInfo",info);
+        request.getRequestDispatcher(path).forward(request, response);
+    }
+
+
+    /**
      * 只能访问web 和assets 两个目录
      *
      * @param pluginId
@@ -77,8 +118,7 @@ public class PluginController {
                          HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
         if (info == null) {
-            response.setStatus(503);
-            JsonUtils.write(response.getOutputStream(), new Result(Result.PLUGIN_NOT_FOUND, "plugin not found." + pluginId));
+            throw new PluginNotFoundException("the plugin "+pluginId+" is not found");
         } else {
             String reqURI = request.getRequestURI();
             String path = reqURI.substring(reqURI.indexOf(pluginId) + pluginId.length() + 1);

@@ -9,7 +9,6 @@ import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.core.util.StringUtils;
 import cn.xiaoyaoji.data.bean.Doc;
 import cn.xiaoyaoji.data.bean.Project;
-import cn.xiaoyaoji.data.bean.ProjectPlugin;
 import cn.xiaoyaoji.data.bean.User;
 import cn.xiaoyaoji.event.ApplicationEventMulticaster;
 import cn.xiaoyaoji.event.DocCreatedEvent;
@@ -20,7 +19,8 @@ import cn.xiaoyaoji.service.ServiceFactory;
 import cn.xiaoyaoji.service.ServiceTool;
 import cn.xiaoyaoji.core.plugin.PluginInfo;
 import cn.xiaoyaoji.core.plugin.PluginManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,7 +36,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = {"/doc"})
 public class DocController {
-    private static Logger logger = Logger.getLogger(DocController.class);
+    private static Logger logger = LoggerFactory.getLogger(DocController.class);
 
     /**
      * 新增
@@ -86,11 +86,11 @@ public class DocController {
         doc.setLastUpdateTime(new Date());
         doc.setCreateTime(null);
         if (org.apache.commons.lang3.StringUtils.isBlank(doc.getName())) {
-            doc.setName(null);
+            doc.setName(before.getName());
         }
         int rs = ServiceFactory.instance().update(doc);
         AssertUtils.isTrue(rs > 0, "修改失败");
-        ApplicationEventMulticaster.instance().multicastEvent(new DocUpdatedEvent(before, doc, user, comment));
+        ApplicationEventMulticaster.instance().multicastEvent(new DocUpdatedEvent(doc,before, user, comment));
         ProjectService.instance().updateLastUpdateTime(before.getProjectId());
 
         return rs;

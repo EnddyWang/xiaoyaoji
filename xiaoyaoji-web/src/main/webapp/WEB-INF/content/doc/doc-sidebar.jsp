@@ -56,10 +56,6 @@
             <ul class="ta-c">
                 <%--<li class="db-item"><a href="#!/add"><i class="iconfont icon-add-circle" style="font-weight: bold;"></i></a>
                 </li>--%>
-
-                <li class="db-item" v-on:click="loadHistory">
-                    <a title="历史版本"><i class="iconfont icon-history"></i></a>
-                </li>
                 <li class="db-item ">
                     <a title="全局设置"><i
                         class="iconfont icon-global"></i></a>
@@ -104,7 +100,7 @@
         </c:if>
     </div>
 --%>
-    <div id="history-modal" uk-modal class="uk-modal-container">
+    <%--<div id="history-modal" uk-modal class="uk-modal-container">
         <div class="uk-modal-dialog">
             <div class="uk-modal-header">
                 <h2 class="uk-modal-title">历史版本</h2>
@@ -135,10 +131,8 @@
                     </tbody>
                 </table>
             </div>
-
-
         </div>
-    </div>
+    </div>--%>
 
     <div id="save-modal" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
@@ -264,14 +258,5 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 </div>
-
-
-
-
 <script src="${assets}/js/project/sidebar.js?v=${v}"></script>

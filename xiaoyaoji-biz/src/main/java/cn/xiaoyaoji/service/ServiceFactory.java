@@ -6,7 +6,8 @@ import cn.xiaoyaoji.core.util.StringUtils;
 import cn.xiaoyaoji.data.DataFactory;
 import cn.xiaoyaoji.data.bean.*;
 import cn.xiaoyaoji.integration.file.FileManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Date;
@@ -18,7 +19,7 @@ import java.util.Map;
  * @Date: 16/5/15
  */
 public class ServiceFactory {
-    private static Logger logger = Logger.getLogger(ServiceFactory.class);
+    private static Logger logger = LoggerFactory.getLogger(ServiceFactory.class);
     private static ServiceFactory instance;
 
     static {

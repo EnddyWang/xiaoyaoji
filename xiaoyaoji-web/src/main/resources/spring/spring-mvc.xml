@@ -27,7 +27,7 @@
     </bean>
 
     <!-- 视图解析 -->
-    <bean class="cn.xiaoyaoji.resolver.AppViewResolver">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/content"/>
         <property name="suffix" value=".jsp"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
@@ -77,6 +77,7 @@
                         <value>WriteDateUseDateFormat</value>
                         <value>WriteMapNullValue</value>
                         <value>WriteNullStringAsEmpty</value>
+                        <value>BrowserCompatible</value>
                     </array>
                 </property>
             </bean>
@@ -98,6 +99,7 @@
             </bean>
         </mvc:return-value-handlers>
     </mvc:annotation-driven>
+
     <!-- controller扫描 -->
     <context:component-scan base-package="cn.xiaoyaoji.controller" />
     <context:component-scan base-package="cn.xiaoyaoji.listener" />

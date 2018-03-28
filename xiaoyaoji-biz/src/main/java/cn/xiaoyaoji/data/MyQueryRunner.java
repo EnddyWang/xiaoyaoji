@@ -2,11 +2,10 @@ package cn.xiaoyaoji.data;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
-
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author zhoujingjie
@@ -14,7 +13,7 @@ import org.apache.log4j.Logger;
  */
 public class MyQueryRunner extends QueryRunner {
 
-    private static Logger logger = Logger.getLogger(MyQueryRunner.class);
+    private static Logger logger = LoggerFactory.getLogger(MyQueryRunner.class);
 
     @Override
     public int update(Connection conn, String sql, Object... params) throws SQLException {

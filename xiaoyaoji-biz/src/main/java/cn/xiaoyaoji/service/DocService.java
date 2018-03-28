@@ -9,7 +9,8 @@ import cn.xiaoyaoji.data.DataFactory;
 import cn.xiaoyaoji.data.bean.Doc;
 import cn.xiaoyaoji.event.ApplicationEventMulticaster;
 import cn.xiaoyaoji.event.DocDeletedEvent;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ import java.util.*;
  * @Date: 17/4/16
  */
 public class DocService {
-    private static Logger logger = Logger.getLogger(DocService.class);
+    private static Logger logger = LoggerFactory.getLogger(DocService.class);
     private static DocService service;
 
     private DocService() {

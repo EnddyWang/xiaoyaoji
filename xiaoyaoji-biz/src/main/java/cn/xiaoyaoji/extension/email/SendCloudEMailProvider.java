@@ -5,14 +5,15 @@ import cn.xiaoyaoji.core.util.ConfigUtils;
 import cn.xiaoyaoji.core.util.HttpUtils;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.httpclient.NameValuePair;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author zhoujingjie
  *         created on 2017/5/18
  */
 public class SendCloudEMailProvider implements EmailProvider {
-    private static Logger logger = Logger.getLogger(SendCloudEMailProvider.class);
+    private static Logger logger = LoggerFactory.getLogger(SendCloudEMailProvider.class);
     private static String TEMPLATE_URL = "http://sendcloud.sohu.com/webapi/mail.send_template.json";
 
     @Override

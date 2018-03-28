@@ -14,7 +14,8 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +31,7 @@ import java.util.*;
  *         created on 2017/8/8
  */
 public class UpdateManager {
-    private static Logger logger = Logger.getLogger(UpdateManager.class);
+    private static Logger logger = LoggerFactory.getLogger(UpdateManager.class);
     private static UpdateManager instance;
 
     static {
@@ -234,8 +235,9 @@ public class UpdateManager {
                 for (String projectId : projectIds) {
                     String tempSQL = "select environments from " + TableNames.PROJECT + " where id = ?";
                     Project temp = qr.query(connection, tempSQL, new BeanHandler<>(Project.class), projectId);
-                    if (temp == null)
+                    if (temp == null) {
                         continue;
+                    }
                     Map<String, Object> httpMap = new HashMap<>();
                     httpMap.put("requestHeaders", globalRequestHeadersMap.get(projectId));
                     httpMap.put("requestArgs", globalRequestArgsMap.get(projectId));

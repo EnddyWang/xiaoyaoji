@@ -1,7 +1,8 @@
 package cn.xiaoyaoji.integration.cache;
 
 import cn.xiaoyaoji.core.util.ConfigUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author zhoujingjie
@@ -10,7 +11,7 @@ import org.apache.log4j.Logger;
 public class CacheManager {
 
     private static CacheProvider cacheProvider;
-    private static Logger logger = Logger.getLogger(CacheManager.class);
+    private static Logger logger = LoggerFactory.getLogger(CacheManager.class);
     static {
         try {
             CacheFactory cacheFactory = (CacheFactory) Class.forName(ConfigUtils.getProperty("cache.provider.factory")).newInstance();

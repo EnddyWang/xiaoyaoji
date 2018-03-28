@@ -1,6 +1,6 @@
 package cn.xiaoyaoji.listener;
 
-import cn.xiaoyaoji.Application;
+import cn.xiaoyaoji.Application2;
 import cn.xiaoyaoji.task.ScheduleManager;
 
 import javax.servlet.ServletContextEvent;
@@ -14,7 +14,7 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
-        Application.started(sce.getServletContext());
+        Application2.started(sce.getServletContext());
     }
 
     @Override

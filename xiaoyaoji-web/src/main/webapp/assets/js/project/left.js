@@ -159,7 +159,7 @@ $(function(){
                     }
                 },
                 contextMenu:function(e){
-                    if(!this.edit){
+                    if(!xyj.page.editMode){
                         return true;
                     }
                     var offset=$('#doc-names').offset();

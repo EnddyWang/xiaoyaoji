@@ -2,14 +2,15 @@ package cn.xiaoyaoji.extension.email;
 
 import cn.xiaoyaoji.core.util.ConfigUtils;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author: zhoujingjie
  * @Date: 16/8/21
  */
 public class EMailUtils {
-    private static Logger logger = Logger.getLogger(EMailUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(EMailUtils.class);
 
     private static EmailProvider provider;
     static {

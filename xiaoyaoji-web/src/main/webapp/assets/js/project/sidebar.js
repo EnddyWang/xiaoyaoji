@@ -70,7 +70,7 @@ $(function () {
                 this.loadProjects();
             },
             methods: {
-                loadHistory: function () {
+                /*loadHistory: function () {
                     if (xyj.page.docId) {
                         var self = this;
                         self.loading.history = true;
@@ -80,7 +80,7 @@ $(function () {
                         });
                         UIkit.modal('#history-modal').show();
                     }
-                },
+                },*/
                 switchCommonly: function (item) {
                     if (item.commonlyUsed == 'YES') {
                         item.commonlyUsed = 'NO';
@@ -96,12 +96,6 @@ $(function () {
                 },
                 viewpage: function () {
                     location.href = xyj.ctx + '/doc/' + xyj.page.docId;
-                },
-                historyURL: function (docId, isEdit, historyId) {
-                    if (isEdit) {
-                        return xyj.ctx + '/doc/' + docId + '/edit?docHistoryId=' + historyId;
-                    }
-                    return xyj.ctx + '/doc/' + docId + '?docHistoryId=' + historyId;
                 },
                 showProject: function () {
                     $('#sidebar').addClass('layer');

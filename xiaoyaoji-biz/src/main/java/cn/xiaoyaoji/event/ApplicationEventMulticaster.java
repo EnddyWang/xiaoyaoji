@@ -3,7 +3,6 @@ package cn.xiaoyaoji.event;
 import cn.xiaoyaoji.listener.ApplicationListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -46,12 +45,12 @@ public class ApplicationEventMulticaster {
 
     public <T extends ApplicationEvent> void registerEvent(ApplicationListener<T> listener) {
         Type[] types = listener.getClass().getGenericInterfaces();
-        if(types == null){
+        if (types == null) {
             logger.error("unregisted listener {}", listener.getClass().getName());
             return;
         }
         Type annotation = types[0];
-        if(!(annotation instanceof ParameterizedType)){
+        if (!(annotation instanceof ParameterizedType)) {
             logger.error("unregisted listener {}", listener.getClass().getName());
             return;
         }
@@ -71,11 +70,7 @@ public class ApplicationEventMulticaster {
         Set<ApplicationListener> listeners = listenerMap.get(event.getClass());
         if (listeners != null) {
             for (ApplicationListener listener : listeners) {
-                try {
-                    listener.onEvent(event);
-                } catch (Exception e) {
-                    logger.error("multicastEvent failed",e);
-                }
+                listener.onEvent(event);
             }
         }
     }

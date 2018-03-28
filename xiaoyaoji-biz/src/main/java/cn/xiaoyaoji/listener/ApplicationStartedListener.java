@@ -26,6 +26,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
  * Date 2018-03-20
  */
 public class ApplicationStartedListener implements ApplicationListener<ContextRefreshedEvent> {
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 

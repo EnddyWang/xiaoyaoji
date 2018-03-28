@@ -3,7 +3,6 @@ package cn.xiaoyaoji.interceptor;
 import cn.xiaoyaoji.core.annotations.Ignore;
 import cn.xiaoyaoji.core.common.Constants;
 import cn.xiaoyaoji.core.exception.NotLoginException;
-import cn.xiaoyaoji.core.util.ConfigUtils;
 import cn.xiaoyaoji.data.bean.User;
 import cn.xiaoyaoji.utils.CacheUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -53,13 +52,13 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        if(modelAndView!=null && modelAndView.getViewName()!=null) {
+       /* if(modelAndView!=null && modelAndView.getViewName()!=null) {
             if (modelAndView.getModel().get("fileAccess") == null) {
                 if(!modelAndView.getViewName().startsWith("redirect:")) {
                     modelAndView.getModel().put("fileAccess", ConfigUtils.getFileAccessURL());
                 }
             }
-        }
+        }*/
     }
 
 

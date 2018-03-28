@@ -1,8 +1,7 @@
 package cn.xiaoyaoji.core.plugin;
 
-import cn.xiaoyaoji.core.plugin.doc.DocEvPlugin;
+import cn.xiaoyaoji.core.plugin.doc.DocPlugin;
 import cn.xiaoyaoji.core.plugin.doc.DocExportPlugin;
-import cn.xiaoyaoji.core.plugin.doc.DocImportPlugin;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -109,9 +108,9 @@ public class ProjectPluginManager {
      * @return 文档插件
      */
     @SuppressWarnings("unchecked")
-    public List<PluginInfo<DocEvPlugin>> getDocEvPlugins(String projectId) {
+    public List<PluginInfo<DocPlugin>> getDocEvPlugins(String projectId) {
         List<PluginInfo> plugins = getPluginInfos(projectId, Event.doc);
-        List<PluginInfo<DocEvPlugin>> temp = new ArrayList<>(plugins.size());
+        List<PluginInfo<DocPlugin>> temp = new ArrayList<>(plugins.size());
         for (PluginInfo item : plugins) {
             temp.add(item);
         }

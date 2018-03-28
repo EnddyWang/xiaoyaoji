@@ -12,10 +12,10 @@ import java.io.OutputStream;
  */
 public class JsonUtils {
     public static String toString(Object data){
-        return JSON.toJSONString(data, SerializerFeature.WriteDateUseDateFormat);
+        return JSON.toJSONString(data, SerializerFeature.WriteDateUseDateFormat,SerializerFeature.BrowserCompatible);
     }
 
     public static void write(OutputStream os,Object data) throws IOException {
-        JSON.writeJSONString(os,data,SerializerFeature.WriteDateUseDateFormat);
+        JSON.writeJSONString(os,data,SerializerFeature.WriteDateUseDateFormat,SerializerFeature.BrowserCompatible);
     }
 }

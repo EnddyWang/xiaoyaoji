@@ -66,20 +66,12 @@ public class IndexController {
         return new ModelAndView("/unsupport");
     }
 
-
-    @GetMapping(value = "/donate")
-    public Object donate() {
-        return new ModelAndView("/donate");
-    }
-
-
-    @RequestMapping("/error")
+    @RequestMapping("error")
     public Object error(){
         return new ModelAndView("/error");
     }
-
-    @RequestMapping("/error/{code}")
-    public Object errorWithCode(@PathVariable("code")String code){
-        return new ModelAndView("/error");
+    @GetMapping(value = "/donate")
+    public Object donate() {
+        return new ModelAndView("/donate");
     }
 }

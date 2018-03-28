@@ -22,7 +22,8 @@ import cn.xiaoyaoji.service.ProjectService;
 import cn.xiaoyaoji.service.ServiceFactory;
 import cn.xiaoyaoji.service.ServiceTool;
 import cn.xiaoyaoji.view.MultiView;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,7 +44,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
-    private static Logger logger = Logger.getLogger(ProjectController.class);
+    private static Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
     @GetMapping("/{id}/info")
     public ModelAndView detailInfo(@PathVariable("id") String id, User user) {

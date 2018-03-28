@@ -1,5 +1,6 @@
 package cn.xiaoyaoji.test;
 
+import cn.xiaoyaoji.utils.PasswordUtils;
 import org.junit.Test;
 
 /**
@@ -10,7 +11,7 @@ public class TestPwd {
 
     @Test
     public void test(){
-        //System.out.println(StringUtils.password("123456"));
+        System.out.println(PasswordUtils.password("123456"));
         //System.out.println(StringUtils.password("123456"));
     }
 }

@@ -5,7 +5,8 @@ import cn.xiaoyaoji.core.common._HashMap;
 import cn.xiaoyaoji.core.exception.NotLoginException;
 import cn.xiaoyaoji.core.exception.ServiceException;
 import com.alibaba.fastjson.support.spring.FastJsonJsonView;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +22,7 @@ import java.net.URLEncoder;
  * @Date: 17/3/30
  */
 public class ExceptionResolver extends SimpleMappingExceptionResolver {
-    private Logger logger = Logger.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Override
     protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         String from = null;

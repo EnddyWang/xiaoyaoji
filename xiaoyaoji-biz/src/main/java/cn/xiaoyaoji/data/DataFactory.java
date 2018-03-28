@@ -15,7 +15,8 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -31,7 +32,7 @@ import java.util.Map;
  * @Date: 16/5/2
  */
 public class DataFactory {
-    private static Logger logger = Logger.getLogger(DataFactory.class);
+    private static Logger logger = LoggerFactory.getLogger(DataFactory.class);
     private static DataFactory instance;
 
     static {
@@ -829,7 +830,7 @@ public class DataFactory {
         });
     }
 
-    public List<ProjectPlugin> getProjectPlugins(){
-        return process((connection, qr) -> qr.query(connection,"select id,projectId,pluginId,createTime from project_plugin",new BeanListHandler<ProjectPlugin>(ProjectPlugin.class)));
+    public List<ProjectPlugin> getProjectPlugins() {
+        return process((connection, qr) -> qr.query(connection, "select id,projectId,pluginId,createTime from project_plugin", new BeanListHandler<ProjectPlugin>(ProjectPlugin.class)));
     }
 }

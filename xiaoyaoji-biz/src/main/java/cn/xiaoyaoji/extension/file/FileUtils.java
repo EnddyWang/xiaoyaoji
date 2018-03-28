@@ -5,7 +5,8 @@ import cn.xiaoyaoji.core.util.StringUtils;
 import cn.xiaoyaoji.integration.file.FileManager;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.Date;
  * @Date: 16/5/2
  */
 public class FileUtils {
-    private static Logger logger = Logger.getLogger(FileUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
     public static MetaData upload(MultipartFile file) throws IOException {
         MetaData md = new MetaData();

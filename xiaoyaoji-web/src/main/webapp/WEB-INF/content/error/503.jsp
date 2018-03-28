@@ -1,4 +1,4 @@
-<%@ page import="org.apache.log4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Exception exception = (Exception) request.getAttribute("exception");
@@ -8,7 +8,7 @@
         if(errorMsg == null && exception instanceof IllegalArgumentException){
             errorMsg = exception.getMessage();
         }else{
-            Logger.getLogger("exception").error("",exception);
+            LoggerFactory.getLogger("exception").error("",exception);
             errorMsg="系统错误";
         }
     }

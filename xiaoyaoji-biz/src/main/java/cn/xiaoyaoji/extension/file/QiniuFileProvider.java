@@ -8,7 +8,8 @@ import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ import java.io.IOException;
  *         created on 2017/5/18
  */
 public class QiniuFileProvider extends AbstractFileProvider {
-    private static Logger logger = Logger.getLogger(QiniuFileProvider.class);
+    private static Logger logger = LoggerFactory.getLogger(QiniuFileProvider.class);
     /**
      * 上传
      *
