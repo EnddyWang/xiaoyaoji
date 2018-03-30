@@ -30,7 +30,12 @@ public enum Event {
     /**
      * 登录
      */
-    login;
+    login,
+    /**
+     * 项目全局
+     */
+    projectGlobal
+    ;
 
     public static Event parse(String value) {
         if (value == null) {

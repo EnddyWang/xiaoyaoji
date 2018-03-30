@@ -2,10 +2,7 @@ package cn.xiaoyaoji.core.plugin;
 
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author zhoujingjie
@@ -13,19 +10,29 @@ import java.util.Set;
  */
 public class PluginInfo<T extends Plugin> {
     private String id;
+    //插件名称
     private String name;
+    //插件简短名称
     private String shortName;
+    //描述
     private String description;
+    //作者
     private String author;
+    //创建时间
     private String createTime;
+    //插件核心类
     private String clazz;
+    //当前版本
     private String version;
+    //图标
     private Icon icon;
+
     private T plugin;
     private Dependency dependency;
+    private List<Dependency> dependencies;
     //运行时文件夹
     private String runtimeFolder;
-
+    //配置
     private Map<String, String> config;
     //运行时目录
     private File runtimeDirectory;
@@ -142,24 +149,7 @@ public class PluginInfo<T extends Plugin> {
         return runtimeDirectory;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
 
-        PluginInfo<?> that = (PluginInfo<?>) o;
-
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 
     public Dependency getDependency() {
         return dependency;
@@ -201,6 +191,25 @@ public class PluginInfo<T extends Plugin> {
     public PluginInfo setShortName(String shortName) {
         this.shortName = shortName;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        PluginInfo<?> that = (PluginInfo<?>) o;
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }
 

@@ -24,4 +24,6 @@ public abstract class DocPlugin extends Plugin<DocPlugin> {
         return "view.jsp";
     }
 
+
+
 }
