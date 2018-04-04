@@ -2,7 +2,6 @@
   {
     "id": "cn.xiaoyaoji.plugin.attachment",
     "name": "附件",
-    "shortName": "附件",
     "clazz": "cn.xiaoyaoji.plugin.attachment.AttachmentPlugin",
     "description": "支持附件上传",
     "author": "zhoujingjie",

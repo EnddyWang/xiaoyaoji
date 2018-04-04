@@ -121,8 +121,8 @@ public class ProjectPluginManager {
     /**
      * 获取导出插件
      *
-     * @param pluginId
-     * @return
+     * @param pluginId 项目id
+     * @return 导出插件
      */
     public PluginInfo<DocExportPlugin> getExportPlugin(String pluginId) {
         List<PluginInfo> list = getPluginInfos(pluginId, Event.docExport);
@@ -132,6 +132,21 @@ public class ProjectPluginManager {
             }
         }
         return null;
+    }
+
+    /**
+     * 获取项目全局插件
+     *
+     * @param projectId 项目id
+     * @return 项目全局插件列表
+     */
+    public List<PluginInfo<ProjectGlobalPlugin>> getProjectGlobalPluginInfos(String projectId) {
+        List<PluginInfo> plugins = getPluginInfos(projectId, Event.projectGlobal);
+        List<PluginInfo<ProjectGlobalPlugin>> temp = new ArrayList<>(plugins.size());
+        for (PluginInfo item : plugins) {
+            temp.add(item);
+        }
+        return temp;
     }
 
 

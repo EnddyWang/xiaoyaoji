@@ -20,6 +20,27 @@
                     }
                     pushMessage(method, newArgs);
                 },
+                loadGlobalPlugin:function(pluginId){
+                    var dom = document.getElementById('g-'+pluginId);
+                    if(!dom){
+                        return;
+                    }
+                    var $panel = $(dom);
+                    if($panel.attr('data-loaded')){
+                        return;
+                    }
+                    UIKit.modal(dom).show();
+                    var page = xyj.page.editMode?'/doc/ep/':'/doc/vp/';
+                    $.ajax({
+                        url: '/plugin'+page+pluginId+'/',type:'get',
+                        complete:function(){
+                        },
+                        success:function(content){
+                            $panel.attr('data-loaded','1');
+                            document.getElementById('g-'+pluginId+'-content').innerHTML=content;
+                        }
+                    });
+                },
                 docExtClick: function (pluginId, editMode) {
                     $('.doc-panel').hide();
                     var id = 'panel_'+pluginId;

@@ -3,6 +3,9 @@
 <%@ page import="cn.xiaoyaoji.core.plugin.ProjectPluginManager" %>
 <%@ page import="cn.xiaoyaoji.data.bean.Project" %>
 <%@ page import="java.util.List" %>
+<%@ page import="cn.xiaoyaoji.core.plugin.ProjectGlobalPlugin" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   User: zhoujingjie
@@ -15,7 +18,17 @@
     Project project = (Project) request.getAttribute("project");
     List<PluginInfo> list = ProjectPluginManager.getInstance().getPluginInfos(project.getId(), Event.parse(e));
     request.setAttribute("docExtPluginInfos", list);
+
+
+    //加载全局插件
+    List<PluginInfo<ProjectGlobalPlugin>> infos = ProjectPluginManager.getInstance().getProjectGlobalPluginInfos(project.getId());
+    Map<PluginInfo<ProjectGlobalPlugin>, String> data = new HashMap<>();
+    for (PluginInfo<ProjectGlobalPlugin> item : infos) {
+        data.put(item, item.getPlugin().getJsonData(project.getId()));
+    }
+    request.setAttribute("projectGlobalData", data);
 %>
+
 
 <!DOCTYPE html>
 <html lang="zh-Hans">
@@ -35,6 +48,9 @@
                     <div class="x-li"><a>全局设置</a></div>
                     <div class="x-sub-ul">
                         <ul>
+                            <c:forEach items="${projectGlobalData}" var="item">
+                                <li><div class="x-li"><a>${item.key.name}</a></div></li>
+                            </c:forEach>
                             <li v-on:click="sidebar('loadGlobal','http')">
                                 <div class="x-li"><a>全局参数</a></div>
                             </li>
@@ -162,11 +178,11 @@
 <script src="${assets}/js/project/doc/doc.js?v=${v}"></script>
 <%--<div class="doc">--%>
 <script>
-    (function(){
+    (function () {
         window._isGlobal_ = '${editProjectGlobal}'
         window.xyj = window.xyj || {};
         xyj.page = xyj.page || {};
-        $.extend(xyj.page,{
+        $.extend(xyj.page, {
             event: "${edit?'docEdit':'docView'}",
             pageType: '${doc.type}',
             docId: '${doc.id}',
@@ -176,3 +192,25 @@
         });
     })();
 </script>
+<script>
+    <c:forEach items="${projectGlobalData}" var="item">
+    <c:if test="${item.value}">
+        (function(){
+            xyj.page.global['${item.key.id}'] =${item.value};
+        })();
+    </c:if>
+    </c:forEach>
+</script>
+<c:forEach items="${projectGlobalData}" var="item">
+<div id="g-${item.key.id}" class="uk-modal-container" uk-modal v-cloak>
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">${item.key.name}</h2>
+            <button type="button" class="uk-modal-close-default uk-icon" v-on:click="closeGlobalModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" ratio="1"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"></line><line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"></line></svg>
+            </button>
+        </div>
+        <div class="uk-modal-body" id="g-${item.key.id}-body" uk-overflow-auto></div>
+    </div>
+</div>
+</c:forEach>

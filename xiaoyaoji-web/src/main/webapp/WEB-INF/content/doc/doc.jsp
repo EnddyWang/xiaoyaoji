@@ -19,9 +19,10 @@
             <div class="double-bounce2"></div>
         </div>
     </div>
-
     <div class="doc-full-width" id="doc-content">
     <div id="panel_default" class="doc-panel">
+
+
 </c:if>
 <c:if test="${editProjectGlobal}">
     <jsp:include page="../project/global/project-global.jsp"/>

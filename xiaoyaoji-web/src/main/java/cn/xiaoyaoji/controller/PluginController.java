@@ -3,16 +3,14 @@ package cn.xiaoyaoji.controller;
 import cn.xiaoyaoji.core.annotations.Ignore;
 import cn.xiaoyaoji.core.common.Result;
 import cn.xiaoyaoji.core.exception.PluginNotFoundException;
-import cn.xiaoyaoji.core.plugin.Event;
-import cn.xiaoyaoji.core.plugin.PluginInfo;
-import cn.xiaoyaoji.core.plugin.PluginManager;
+import cn.xiaoyaoji.core.exception.PluginTypeNotMatchException;
+import cn.xiaoyaoji.core.plugin.*;
 import cn.xiaoyaoji.core.plugin.doc.DocPlugin;
 import cn.xiaoyaoji.core.util.AssertUtils;
 import cn.xiaoyaoji.core.util.ConfigUtils;
 import cn.xiaoyaoji.core.util.JsonUtils;
 import cn.xiaoyaoji.core.util.StringUtils;
 import cn.xiaoyaoji.entity.MapParameter;
-import cn.xiaoyaoji.core.plugin.PluginUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,9 +38,7 @@ public class PluginController {
     /**
      * 插件http请求
      *
-     * @param request  req
-     * @param response resp
-     * @throws Exception e
+     * @param pluginId 插件id
      */
     @Ignore
     @RequestMapping("/req/{pluginId}/**")
@@ -65,6 +61,7 @@ public class PluginController {
 
     /**
      * 文档编辑页面
+     *
      * @param pluginId 插件id
      */
     @Ignore
@@ -72,32 +69,50 @@ public class PluginController {
     public void editPage(@PathVariable("pluginId") String pluginId, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
         PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
         if (info == null) {
-            throw new PluginNotFoundException("the plugin "+pluginId+" is not found");
+            throw new PluginNotFoundException("the plugin " + pluginId + " is not found");
         }
         if (!(info.getPlugin() instanceof DocPlugin)) {
-            throw new PluginNotFoundException("the plugin "+pluginId+" is not doc plugin");
+            throw new PluginNotFoundException("the plugin " + pluginId + " is not doc plugin");
         }
-        String path = PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + "/web/" + ((DocPlugin) info.getPlugin()).getEditPage();
-        request.setAttribute("pluginInfo",info);
+        String editPage = null;
+        if (info.getPlugin() instanceof DocPlugin) {
+            editPage = ((DocPlugin) info.getPlugin()).getEditPage();
+        } else if (info.getPlugin() instanceof ProjectGlobalPlugin) {
+            editPage = ((ProjectGlobalPlugin) info.getPlugin()).getEditPage();
+        } else {
+            throw new PluginTypeNotMatchException("the plugin type of " + pluginId + " is not docPlugin or ProjectGlobalPlugin");
+        }
+
+        String path = PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + "/web/" + editPage;
+        request.setAttribute("pluginInfo", info);
         request.getRequestDispatcher(path).forward(request, response);
     }
 
     /**
      * 文档查看页面
-     * @param pluginId  插件id
+     *
+     * @param pluginId 插件id
      */
     @Ignore
     @GetMapping("/doc/vp/{pluginId}")
-    public void viewPage(@PathVariable("pluginId") String pluginId,HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+    public void viewPage(@PathVariable("pluginId") String pluginId, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
         PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
         if (info == null) {
-            throw new PluginNotFoundException("the plugin "+pluginId+" is not found");
+            throw new PluginNotFoundException("the plugin " + pluginId + " is not found");
         }
         if (!(info.getPlugin() instanceof DocPlugin)) {
-            throw new PluginNotFoundException("the plugin "+pluginId+" is not doc plugin");
+            throw new PluginNotFoundException("the plugin " + pluginId + " is not doc plugin");
         }
-        String path = PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + "/web/" + ((DocPlugin) info.getPlugin()).getViewPage();
-        request.setAttribute("pluginInfo",info);
+        String viewPage = null;
+        if (info.getPlugin() instanceof DocPlugin) {
+            viewPage = ((DocPlugin) info.getPlugin()).getViewPage();
+        } else if (info.getPlugin() instanceof ProjectGlobalPlugin) {
+            viewPage = ((ProjectGlobalPlugin) info.getPlugin()).getViewPage();
+        } else {
+            throw new PluginTypeNotMatchException("the plugin type of " + pluginId + " is not docPlugin or ProjectGlobalPlugin");
+        }
+        String path = PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + "/web/" + viewPage;
+        request.setAttribute("pluginInfo", info);
         request.getRequestDispatcher(path).forward(request, response);
     }
 
@@ -118,13 +133,10 @@ public class PluginController {
                          HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
         if (info == null) {
-            throw new PluginNotFoundException("the plugin "+pluginId+" is not found");
+            throw new PluginNotFoundException("the plugin " + pluginId + " is not found");
         } else {
             String reqURI = request.getRequestURI();
             String path = reqURI.substring(reqURI.indexOf(pluginId) + pluginId.length() + 1);
-            if (path.contains("jspex")) {
-                path = path.replace("jspex", "jsp");
-            }
             path = PluginUtils.getPluginSourceDir() + info.getRuntimeFolder() + "/" + folder + "/" + path;
             request.setAttribute("pluginInfo", info);
             request.getRequestDispatcher(path).forward(request, response);
@@ -166,6 +178,12 @@ public class PluginController {
                 .addObject("pluginId", pluginId);
     }
 
+    /**
+     * 插件配置
+     *
+     * @param pluginId     插件id
+     * @param mapParameter 所有参数
+     */
     @Ignore
     @PostMapping("/config")
     public ModelAndView updateConfig(@RequestParam("pluginId") String pluginId,
@@ -178,6 +196,11 @@ public class PluginController {
         return new ModelAndView("redirect:/plugin/config?id=" + pluginId);
     }
 
+    /**
+     * 上传插件
+     *
+     * @param file 插件文件
+     */
     @Ignore
     @PostMapping("/upload")
     public ModelAndView uploadPlugin(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
