@@ -1,4 +1,4 @@
-package cn.xiaoyaoji.plugin.global;
+package cn.xiaoyaoji.plugin.doc.global;
 
 import cn.xiaoyaoji.core.plugin.ProjectGlobalPlugin;
 import cn.xiaoyaoji.core.util.JsonUtils;
@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  * 　　┗┓┓┏━┳┓┏┛
  * 　　　┃┫┫　┃┫┫
  * 　　　┗┻┛　┗┻┛
+ * <p>
+ * 环境变量
  *
  * @author zhoujingjie
  * Date 2018-04-04
@@ -71,7 +73,7 @@ public class GlobalEnvPlugin extends ProjectGlobalPlugin {
             DataFactory.instance().process((connection, qr) -> qr.update(connection, "insert into " + tableName + " (projectId,content) values(?,?) on duplicate key update content=?", projectId, content, content));
             return true;
         }
-        throw new UnsupportedOperationException("不支持该地址"+path);
+        throw new UnsupportedOperationException("不支持该地址" + path);
     }
 
     @Override
@@ -79,4 +81,13 @@ public class GlobalEnvPlugin extends ProjectGlobalPlugin {
         return JsonUtils.toString(getByProjectId(projectId));
     }
 
+    @Override
+    public String getEditPage() {
+        return "global-env/edit.jsp";
+    }
+
+    @Override
+    public String getViewPage() {
+        return "global-env/view.jsp";
+    }
 }

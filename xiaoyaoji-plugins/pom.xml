@@ -19,7 +19,6 @@
         <module>xiaoyaoji-plugin-history</module>
         <module>xiaoyaoji-plugin-export-pdf</module>
         <module>xiaoyaoji-plugin-impexp-json</module>
-        <module>xiaoyaoji-plugin-global</module>
     </modules>
 
     <build>

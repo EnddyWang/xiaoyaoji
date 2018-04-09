@@ -43,7 +43,7 @@ public abstract class Plugin<T extends Plugin> {
     /**
      * 插件初始化
      */
-    public abstract void init();
+    public void init(){}
 
     /**
      * 插件卸载时触发

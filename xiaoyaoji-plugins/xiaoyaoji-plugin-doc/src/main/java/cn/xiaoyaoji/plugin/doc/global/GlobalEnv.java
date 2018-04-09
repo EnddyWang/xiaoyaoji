@@ -1,4 +1,4 @@
-package cn.xiaoyaoji.plugin.global;
+package cn.xiaoyaoji.plugin.doc.global;
 
 import cn.xiaoyaoji.core.annotations.Alias;
 

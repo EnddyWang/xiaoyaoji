@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<div id="global">
-
+<div id="global-env">
     <datalist id="headerlist">
         <option v-for="item in flag.headers" :value="item">
     </datalist>
@@ -12,7 +10,6 @@
     <datalist id="responselist">
         <option v-for="item in flag.responses" :value="item">
     </datalist>
-
 
     <div id="api-edit-details">
         <div id="api-edit-content" class="form">
@@ -149,8 +146,7 @@
 </div>
 
 
-
-<jsp:include page="../include/request-headers.jsp"/>
-<jsp:include page="../include/request-args.jsp"/>
-<jsp:include page="../include/response-headers.jsp"/>
-<jsp:include page="../include/response-args.jsp"/>
+<jsp:include page="../includes/request-headers.jsp"/>
+<jsp:include page="../includes/request-args.jsp"/>
+<jsp:include page="../includes/response-headers.jsp"/>
+<jsp:include page="../includes/response-args.jsp"/>

@@ -179,7 +179,7 @@
 <%--<div class="doc">--%>
 <script>
     (function () {
-        window._isGlobal_ = '${editProjectGlobal}'
+        window._isGlobal_ = '${editProjectGlobal}';
         window.xyj = window.xyj || {};
         xyj.page = xyj.page || {};
         $.extend(xyj.page, {
