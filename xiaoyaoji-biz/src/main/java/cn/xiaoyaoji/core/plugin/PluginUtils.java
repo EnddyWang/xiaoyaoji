@@ -133,16 +133,15 @@ public class PluginUtils {
         PluginClassLoader classLoader = new PluginClassLoader();
         classLoader.addURL(new File(dir + "/classes/").toURI().toURL());
         File jars = new File(dir + "/libs/");
-        if (!(jars.exists() && jars.isDirectory())) {
-            return;
-        }
-        File[] jarFiles = jars.listFiles((dir1, name) -> name.endsWith(".jar"));
-        if (jarFiles != null) {
+        if (jars.exists() && jars.isDirectory()) {
+            File[] jarFiles = jars.listFiles((dir1, name) -> name.endsWith(".jar"));
+            if (jarFiles != null) {
 
-            for (File file : jarFiles) {
-                String path = file.toURI().toString()+"!/";
-                URL jarURL = new URL("jar", "", -1, path);
-                classLoader.addURL(jarURL);
+                for (File file : jarFiles) {
+                    String path = file.toURI().toString()+"!/";
+                    URL jarURL = new URL("jar", "", -1, path);
+                    classLoader.addURL(jarURL);
+                }
             }
         }
 

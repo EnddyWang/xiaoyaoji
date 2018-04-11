@@ -49,7 +49,7 @@
                     <div class="x-sub-ul">
                         <ul>
                             <c:forEach items="${projectGlobalData}" var="item">
-                                <li><div class="x-li"><a>${item.key.name}</a></div></li>
+                                <li v-on:click="loadGlobalPlugin('${item.key.id}')"><div class="x-li"><a>${item.key.name}</a></div></li>
                             </c:forEach>
                             <li v-on:click="sidebar('loadGlobal','http')">
                                 <div class="x-li"><a>全局参数</a></div>
@@ -113,15 +113,6 @@
                         <div class="x-li"><a>${item.name}</a></div>
                     </li>
                 </c:forEach>
-                    <%--<li v-on:click="sidebar('loadHistory')">
-                        <div class="x-li"><a>历史记录</a></div>
-                    </li>
-                    <li>
-                        <div class="x-li"><a><i class="iconfont icon-edit1"></i>测试</a></div>
-                    </li>
-                    <li>
-                        <div class="x-li"><a><i class="iconfont icon-edit1"></i>Mock</a></div>
-                    </li>--%>
             </ul>
         </div>
     </c:if>

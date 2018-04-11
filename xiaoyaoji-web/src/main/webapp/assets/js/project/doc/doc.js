@@ -26,10 +26,10 @@
                         return;
                     }
                     var $panel = $(dom);
-                    if($panel.attr('data-loaded')){
+                    /*if($panel.attr('data-loaded')){
                         return;
-                    }
-                    UIKit.modal(dom).show();
+                    }*/
+                    UIkit.modal(dom).show();
                     var page = xyj.page.editMode?'/doc/ep/':'/doc/vp/';
                     $.ajax({
                         url: '/plugin'+page+pluginId+'/',type:'get',
@@ -37,7 +37,7 @@
                         },
                         success:function(content){
                             $panel.attr('data-loaded','1');
-                            document.getElementById('g-'+pluginId+'-content').innerHTML=content;
+                            document.getElementById('g-'+pluginId+'-body').innerHTML=content;
                         }
                     });
                 },

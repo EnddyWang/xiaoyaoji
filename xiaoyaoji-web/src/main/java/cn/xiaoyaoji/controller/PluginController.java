@@ -71,9 +71,6 @@ public class PluginController {
         if (info == null) {
             throw new PluginNotFoundException("the plugin " + pluginId + " is not found");
         }
-        if (!(info.getPlugin() instanceof DocPlugin)) {
-            throw new PluginNotFoundException("the plugin " + pluginId + " is not doc plugin");
-        }
         String editPage = null;
         if (info.getPlugin() instanceof DocPlugin) {
             editPage = ((DocPlugin) info.getPlugin()).getEditPage();
@@ -99,9 +96,6 @@ public class PluginController {
         PluginInfo info = PluginManager.getInstance().getPluginInfo(pluginId);
         if (info == null) {
             throw new PluginNotFoundException("the plugin " + pluginId + " is not found");
-        }
-        if (!(info.getPlugin() instanceof DocPlugin)) {
-            throw new PluginNotFoundException("the plugin " + pluginId + " is not doc plugin");
         }
         String viewPage = null;
         if (info.getPlugin() instanceof DocPlugin) {
