@@ -5,7 +5,7 @@
  */
 
 (function(){
-    requirejs(['vue','utils',xyj.ctx+'/assets/js/project/doc/doc.commons.js'],function(Vue,utils,commons){
+    requirejs(['vue','utils',xyj.ctx+'/plugin/assets/cn.xiaoyaoji.plugin.global-env/js/doc.commons.js'],function(Vue,utils,commons){
 
         window.submitProjectGlobal = function(){
             var environment = JSON.stringify(app.global.environment);
@@ -39,9 +39,6 @@
                 },
                 global:null,
                 tempStatus:{}
-            },
-            mounted:function(){
-                commons._initsort_(this);
             },
             created:function(){
                 var g = window.global;
@@ -78,6 +75,12 @@
                 commons.checkId(g.http.requestHeaders);
                 commons.checkId(g.http.responseHeaders);
                 commons.checkId(g.http.responseArgs);
+
+
+                _initsort_(this,'requestArgs');
+                _initsort_(this,'requestHeaders');
+                _initsort_(this,'responseArgs');
+                _initsort_(this,'responseHeaders');
 
                 if(!g.environment){
                     g.environment=[];
@@ -195,7 +198,7 @@
                         }
                     });
                     this.importModal = false;
-                    commons._initsort_(this);
+                    commons._initsort_(this,self.import);
                 },
                 statusOk:function(){
                     if(!(this.tempStatus.name)){

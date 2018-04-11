@@ -37,7 +37,7 @@
                         },
                         success:function(content){
                             $panel.attr('data-loaded','1');
-                            document.getElementById('g-'+pluginId+'-body').innerHTML=content;
+                            $(document.getElementById('g-'+pluginId+'-body')).html(content);
                         }
                     });
                 },

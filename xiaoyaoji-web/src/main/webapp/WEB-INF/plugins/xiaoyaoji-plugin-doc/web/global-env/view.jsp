@@ -150,7 +150,8 @@
 
 
 
-<jsp:include page="../include/request-headers.jsp"/>
-<jsp:include page="../include/request-args.jsp"/>
-<jsp:include page="../include/response-headers.jsp"/>
-<jsp:include page="../include/response-args.jsp"/>
+<jsp:include page="../includes/request-headers.jsp"/>
+<jsp:include page="../includes/request-args.jsp"/>
+<jsp:include page="../includes/response-headers.jsp"/>
+<jsp:include page="../includes/response-args.jsp"/>
+<script src="${ctx}/plugin/assets/${pluginInfo.id}/js/global.js"></script>
